@@ -221,7 +221,7 @@ button { cursor:pointer; }
   .restaurant-layout .order-panel { position:static; display:flex; flex-direction:column; min-height:0; height:100%; max-height:none; padding:20px; border:1px solid var(--line); border-radius:20px; background:var(--card); box-shadow:var(--shadow); overflow:hidden; }
   .restaurant-layout .order-panel-head, .restaurant-layout .order-total { display:flex; }
   .restaurant-layout .order-lines { display:grid; flex:1 1 auto; }
-  .restaurant-layout .pay-bar, .sidebar-collapsed .restaurant-layout .pay-bar { position:static; left:auto; bottom:auto; transform:none; width:100%; margin-top:14px; border-radius:15px; padding:14px 17px; }
+  .restaurant-layout .pay-bar, .sidebar-collapsed .restaurant-layout .pay-bar { position:static; left:auto; bottom:auto; transform:none; width:100%; margin-top:14px; border-radius:15px; padding:14px 17px; box-shadow:0 4px 10px rgba(16,42,42,.18); }
 }
 
 @media (min-width:900px) and (max-width:1099px) and (orientation:landscape) {
