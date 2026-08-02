@@ -39,28 +39,14 @@ button { cursor:pointer; }
 .user-chip small { color:#9eb2ad; margin-top:2px; }
 .language-switch { display:flex; gap:6px; padding:8px; }
 .language-switch button { border:1px solid rgba(255,255,255,.25); background:transparent; color:#d9e5e1; border-radius:8px; padding:6px 10px; font-size:12px; font-weight:800; }
-.theme-picker-wrap { display:grid; gap:5px; padding:8px; color:#c8d5d1; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.08em; }
-.theme-picker { width:100%; min-height:36px; border:1px solid rgba(255,255,255,.25); border-radius:9px; background:rgba(255,255,255,.07); color:#fff; padding:6px 8px; font-size:12px; text-transform:none; letter-spacing:0; }
-.theme-picker option { background:var(--ink); color:#fff; }
-.theme-control { position:relative; }
-.theme-customizer { margin:0 8px 8px; color:#d9e5e1; font-size:12px; }
-.theme-customizer > summary { cursor:pointer; font-weight:800; padding:6px 0; }
-.theme-customizer[open] { position:absolute; left:calc(100% + 8px); bottom:0; width:250px; margin:0; padding:14px; border:1px solid var(--line); border-radius:14px; background:var(--card); color:var(--ink); box-shadow:var(--shadow); z-index:30; }
-.theme-customizer[open] > summary { padding:0 0 10px; }
-.theme-color-grid { display:grid; gap:8px; }
-.theme-color-grid label { display:flex; align-items:center; justify-content:space-between; gap:12px; font-weight:700; }
-.theme-color-grid input[type="color"] { width:48px; height:34px; padding:2px; border:1px solid var(--line); border-radius:8px; background:var(--card); }
-.theme-reset { width:100%; margin-top:12px; padding:9px; border:1px solid var(--line); border-radius:9px; background:var(--paper); font-weight:750; }
 
 .sidebar-collapsed { --sidebar-width:82px; }
 .sidebar-collapsed .sidebar { padding-inline:12px; }
 .sidebar-collapsed .sidebar-head { display:block; }
 .sidebar-collapsed .logo { padding:0 8px 18px; }
-.sidebar-collapsed .logo strong, .sidebar-collapsed .sidebar nav span, .sidebar-collapsed .user-chip > span:last-child, .sidebar-collapsed .theme-picker-wrap span { display:none; }
+.sidebar-collapsed .logo strong, .sidebar-collapsed .sidebar nav span, .sidebar-collapsed .user-chip > span:last-child { display:none; }
 .sidebar-collapsed .sidebar nav a { display:grid; place-items:center; font-size:20px; padding-inline:8px; }
 .sidebar-collapsed .user-chip { justify-content:center; padding-inline:0; }
-.sidebar-collapsed .theme-picker-wrap { padding-inline:0; }
-.sidebar-collapsed .theme-picker { min-height:32px; padding:0; font-size:0; background:var(--lime); }
 .sidebar-collapsed .language-switch { display:grid; grid-template-columns:1fr; padding-inline:3px; }
 .sidebar-collapsed .nav-button { width:100%; font-size:0; text-align:center; }
 .sidebar-collapsed .nav-button::first-letter { font-size:20px; }
@@ -144,10 +130,6 @@ button { cursor:pointer; }
 .auth-card { width:min(440px,100%); background:var(--card); border-radius:26px; padding:36px; box-shadow:0 30px 90px #0005; }
 .auth-card .brand-mark { margin-bottom:22px; }
 .auth-card h1 { font-size:34px; margin:0; }
-.auth-theme-picker { position:fixed; right:18px; top:14px; z-index:2; }
-.auth-theme-picker .theme-picker-wrap { color:#fff; }
-.auth-theme-picker .theme-picker { min-width:170px; }
-.auth-theme-picker .theme-customizer[open] { left:auto; right:0; top:100%; bottom:auto; }
 .stack-form { display:grid; gap:9px; margin-top:25px; }
 .stack-form label { font-size:13px; font-weight:750; margin-top:5px; }
 .stack-form input, .stack-form select, .form-control { width:100%; min-height:46px; border:1px solid var(--line); border-radius:11px; padding:10px 12px; background:var(--card); }
@@ -189,6 +171,11 @@ td.right, th.right { text-align:right; }
 .receipt-meta small { color:var(--muted); margin-bottom:5px; }
 .compact { max-width:420px; }
 .inline-empty { box-shadow:none; margin-top:10px; }
+.appearance-form { max-width:680px; }
+.admin-color-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.admin-color-grid label { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:0; padding:10px 12px; border:1px solid var(--line); border-radius:10px; }
+.admin-color-grid input[type="color"] { width:54px; min-height:38px; padding:2px; }
+.success-message { max-width:680px; margin-bottom:16px; padding:13px 16px; border-radius:12px; background:color-mix(in srgb,var(--brand),#fff 86%); color:var(--ink); font-weight:750; }
 [data-theme="contrast"] .product-card, [data-theme="contrast"] .panel, [data-theme="contrast"] .auth-card { border-width:2px; }
 
 @media (max-width:760px) {
@@ -198,12 +185,9 @@ td.right, th.right { text-align:right; }
   .sidebar-collapse { display:none; }
   .sidebar-collapsed .sidebar-head { display:flex; }
   .sidebar-collapsed .logo { padding:0 8px 28px; }
-  .sidebar-collapsed .logo strong, .sidebar-collapsed .sidebar nav span, .sidebar-collapsed .user-chip > span:last-child, .sidebar-collapsed .theme-picker-wrap span { display:block; }
+  .sidebar-collapsed .logo strong, .sidebar-collapsed .sidebar nav span, .sidebar-collapsed .user-chip > span:last-child { display:block; }
   .sidebar-collapsed .sidebar nav a { display:block; font-size:inherit; padding:13px 14px; }
   .sidebar-collapsed .user-chip { justify-content:flex-start; padding:14px 8px; }
-  .sidebar-collapsed .theme-picker-wrap { padding:8px; }
-  .sidebar-collapsed .theme-picker { min-height:36px; padding:6px 8px; font-size:12px; background:rgba(255,255,255,.07); }
-  .sidebar .theme-customizer[open] { position:static; width:auto; margin:0 8px 8px; }
   .sidebar-collapsed .language-switch { display:flex; padding:8px; }
   .sidebar-collapsed .nav-button { font-size:inherit; text-align:left; }
   .mobile-header { display:flex; height:58px; background:var(--ink); color:#fff; align-items:center; justify-content:space-between; padding:0 18px; position:sticky; top:0; z-index:15; }
@@ -229,7 +213,5 @@ td.right, th.right { text-align:right; }
   .stat { flex:1; }
   .button-row { flex-wrap:wrap; }
   .delete-space { margin-left:0; }
-  .auth-theme-picker { right:8px; top:6px; }
-  .auth-theme-picker .theme-picker-wrap span { display:none; }
-  .auth-theme-picker .theme-picker { min-width:130px; }
+  .admin-color-grid { grid-template-columns:1fr; }
 }

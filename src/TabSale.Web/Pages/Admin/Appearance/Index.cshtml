@@ -1,0 +1,21 @@
+@page
+@model TabSale.Web.Pages.Admin.Appearance.IndexModel
+@inject TabSale.Web.Services.AppText T
+@{ ViewData["Title"] = T["Appearance"]; }
+<div class="page-title"><div><p class="eyebrow">@T["Administration"]</p><h1>@T["Appearance"]</h1></div></div>
+@if (Model.Saved) { <div class="success-message">@T["AppearanceSaved"]</div> }
+<form method="post" class="panel stack-form appearance-form">
+  <div asp-validation-summary="ModelOnly" class="validation"></div>
+  <label asp-for="Input.Theme">Theme</label>
+  <select asp-for="Input.Theme">
+    <option value="classic">TabSale Classic</option><option value="winter">Winter</option><option value="market">Market</option><option value="contrast">High contrast</option><option value="custom">@T["CustomTheme"]</option>
+  </select>
+  <fieldset><legend>@T["Colors"]</legend><div class="admin-color-grid">
+    <label><span>@T["NavigationColor"]</span><input asp-for="Input.Ink" type="color"/></label>
+    <label><span>@T["PrimaryColor"]</span><input asp-for="Input.Brand" type="color"/></label>
+    <label><span>@T["AccentColor"]</span><input asp-for="Input.Lime" type="color"/></label>
+    <label><span>@T["BackgroundColor"]</span><input asp-for="Input.Paper" type="color"/></label>
+    <label><span>@T["DangerColor"]</span><input asp-for="Input.Danger" type="color"/></label>
+  </div><p class="muted">@T["CustomColorsHelp"]</p></fieldset>
+  <div class="button-row"><button class="btn btn-primary" type="submit">@T["Save"]</button><a class="btn btn-light" asp-page="/Sale/Index">@T["Back"]</a></div>
+</form>

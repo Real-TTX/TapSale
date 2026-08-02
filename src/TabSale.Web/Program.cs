@@ -56,6 +56,7 @@ builder.Services.AddScoped<IPasswordHasher<AppUser>, PasswordHasher<AppUser>>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<CurrentUser>();
 builder.Services.AddSingleton<AppText>();
+builder.Services.AddSingleton(new ThemeConfigStore(Path.Combine(dataPath, "theme.json")));
 builder.Services.AddAntiforgery(options => options.HeaderName = "X-CSRF-TOKEN");
 
 var app = builder.Build();

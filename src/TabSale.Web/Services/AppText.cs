@@ -39,7 +39,9 @@ public sealed class AppText
         ["LoginHelp"] = ("Schnell und zuverlässig verkaufen – auch offline.", "Fast, reliable selling — even offline."), ["DeleteConfirm"] = ("Wirklich endgültig löschen?", "Delete permanently?"),
         ["CustomTheme"] = ("Eigenes CI", "Custom brand"), ["Colors"] = ("Farben", "Colors"), ["NavigationColor"] = ("Navigation", "Navigation"),
         ["PrimaryColor"] = ("Primär", "Primary"), ["AccentColor"] = ("Akzent", "Accent"), ["BackgroundColor"] = ("Hintergrund", "Background"),
-        ["DangerColor"] = ("Warnung", "Danger"), ["ResetColors"] = ("Farben zurücksetzen", "Reset colors")
+        ["DangerColor"] = ("Warnung", "Danger"), ["ResetColors"] = ("Farben zurücksetzen", "Reset colors"),
+        ["Appearance"] = ("Darstellung", "Appearance"), ["AppearanceSaved"] = ("Darstellung wurde für alle Benutzer gespeichert.", "Appearance was saved for all users."),
+        ["CustomColorsHelp"] = ("Die Farben werden verwendet, wenn „Eigenes CI“ gewählt ist.", "The colors are used when “Custom brand” is selected.")
     };
 
     public string this[string key] => Values.TryGetValue(key, out var value)
