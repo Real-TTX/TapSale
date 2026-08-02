@@ -32,10 +32,11 @@ public static class SaleApi
             var keys = input.Lines.Select(x => new { x.ProductId, x.Version }).ToList();
             var productIds = keys.Select(x => x.ProductId).Distinct().ToList();
             var versions = await db.ProductPriceVersion.Where(x => productIds.Contains(x.ProductId)).ToListAsync();
+            var soldDate = input.SoldDate.ToUniversalTime();
             var sale = new Models.Sale
             {
                 Token = input.Token, DeviceToken = input.DeviceToken, UserId = current.Id, SaleListId = input.SaleListId,
-                SoldDate = input.SoldDate.ToUniversalTime(), Kind = SaleKind.Sale, TenderedCents = input.TenderedCents,
+                SoldDate = soldDate, SoldDateUnixMilliseconds = soldDate.ToUnixTimeMilliseconds(), Kind = SaleKind.Sale, TenderedCents = input.TenderedCents,
                 CashShiftId = await db.CashShift.Where(x => x.UserId == current.Id && x.SaleListId == input.SaleListId && x.ClosedDate == null).Select(x => (long?)x.Id).FirstOrDefaultAsync(),
                 CreateUserId = current.Id, UpdateUserId = current.Id
             };
@@ -67,10 +68,11 @@ public static class SaleApi
         if (original is null) return Results.NotFound();
         if (!current.IsAdmin && !await CanUseList(db, current, original.SaleListId)) return Results.Forbid();
         if (original.Kind == SaleKind.Cancellation || await db.Sale.AnyAsync(x => x.OriginalSaleId == id)) return Results.Conflict(new { error = "Already cancelled." });
+        var cancellationDate = DateTimeOffset.UtcNow;
         var cancellation = new Models.Sale
         {
             Token = Guid.NewGuid(), DeviceToken = current.SessionToken, UserId = current.Id, SaleListId = original.SaleListId, Kind = SaleKind.Cancellation,
-            OriginalSaleId = original.Id, SoldDate = DateTimeOffset.UtcNow, TotalCents = -original.TotalCents, CreateUserId = current.Id, UpdateUserId = current.Id,
+            OriginalSaleId = original.Id, SoldDate = cancellationDate, SoldDateUnixMilliseconds = cancellationDate.ToUnixTimeMilliseconds(), TotalCents = -original.TotalCents, CreateUserId = current.Id, UpdateUserId = current.Id,
             Lines = original.Lines.Select(x => new SaleLine { ProductId = x.ProductId, ProductName = x.ProductName, ProductKind = x.ProductKind, ProductVersion = x.ProductVersion, UnitPriceCents = x.UnitPriceCents, Quantity = x.Quantity, LineTotalCents = -x.LineTotalCents, CreateUserId = current.Id, UpdateUserId = current.Id }).ToList()
         };
         db.Sale.Add(cancellation); await db.SaveChangesAsync(); return Results.Ok(new { cancellation.Id });

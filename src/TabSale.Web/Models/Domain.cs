@@ -121,6 +121,7 @@ public sealed class Sale : AuditEntity
     public long? OriginalSaleId { get; set; }
     public Sale? OriginalSale { get; set; }
     public DateTimeOffset SoldDate { get; set; }
+    public long SoldDateUnixMilliseconds { get; set; }
     public long TotalCents { get; set; }
     public long? TenderedCents { get; set; }
     public long? ChangeCents { get; set; }
