@@ -47,6 +47,11 @@ button { cursor:pointer; }
 .sidebar-collapsed .sidebar { transform:translateX(-100%); }
 .sidebar-collapsed .sidebar-reopen { display:grid; }
 
+/* Keep the floating reopen control in its own gutter on tablet-sized screens. */
+@media (min-width:761px) and (max-width:1652px) {
+  .sidebar-collapsed .content { padding-left:max(86px,4vw); }
+}
+
 .main { min-width:0; grid-column:2; }
 .content { padding:34px clamp(20px,4vw,58px) 120px; max-width:1480px; margin:auto; }
 .mobile-header { display:none; }
