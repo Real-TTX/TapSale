@@ -43,6 +43,7 @@ public sealed class AppText
         ["Appearance"] = ("Darstellung", "Appearance"), ["AppearanceSaved"] = ("Darstellung wurde für alle Benutzer gespeichert.", "Appearance was saved for all users."),
         ["CustomColorsHelp"] = ("Die Farben werden verwendet, wenn „Eigenes CI“ gewählt ist.", "The colors are used when “Custom brand” is selected."),
         ["Categories"] = ("Kategorien", "Categories"), ["Category"] = ("Kategorie", "Category"), ["NewCategory"] = ("Neue Kategorie", "New category"),
+        ["ProductList"] = ("Produktliste", "Product list"), ["SaleListContent"] = ("Inhalt der Verkaufsliste", "Sale list content"),
         ["NoCategory"] = ("Ohne Kategorie", "No category"), ["AllCategories"] = ("Alle", "All"), ["OtherCategory"] = ("Sonstiges", "Other"),
         ["ProductImage"] = ("Produktbild", "Product image"), ["RemoveImage"] = ("Vorhandenes Bild entfernen", "Remove current image"),
         ["ImageHelp"] = ("PNG, JPG, GIF oder WebP, maximal 5 MB. Ohne Bild wird das gewählte Icon angezeigt.", "PNG, JPG, GIF or WebP, maximum 5 MB. The selected icon is shown when no image is stored."),

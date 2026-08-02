@@ -188,6 +188,11 @@ button { cursor:pointer; }
 .page-title h1 { font-size:clamp(30px,5vw,46px); margin:0; letter-spacing:-.03em; }
 .section-title h2 { margin:0; }
 .inline-actions { display:flex; align-items:center; gap:10px; }
+.tab-bar { display:flex; gap:6px; margin:-8px -8px 22px; padding:6px; overflow-x:auto; border-bottom:1px solid var(--line); }
+.tab-bar a { flex:0 0 auto; display:flex; align-items:center; gap:8px; min-height:44px; padding:9px 14px; border-radius:11px 11px 0 0; color:var(--muted); font-weight:800; text-decoration:none; }
+.tab-bar a:hover { background:color-mix(in srgb,var(--paper),var(--ink) 5%); color:var(--ink); }
+.tab-bar a.active { background:var(--ink); color:#fff; }
+.tab-bar a span { display:grid; place-items:center; min-width:24px; height:24px; padding:0 7px; border-radius:999px; background:color-mix(in srgb,currentColor,transparent 84%); font-size:12px; }
 .toolbar { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px; }
 .toolbar input, .toolbar select { min-height:43px; border:1px solid var(--line); border-radius:10px; padding:8px 11px; background:var(--card); min-width:150px; }
 .toolbar input[name=search] { flex:1; min-width:190px; }

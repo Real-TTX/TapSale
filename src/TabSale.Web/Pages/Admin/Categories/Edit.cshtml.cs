@@ -49,7 +49,7 @@ public sealed class EditModel(AppDbContext db, CurrentUser current, AppText text
             entity.Name=Input.Name.Trim(); entity.Color=Input.Color; entity.Icon=Input.Icon; entity.SortOrder=Input.SortOrder; entity.IsActive=Input.IsActive; entity.UpdateUserId=current.Id;
         }
         await db.SaveChangesAsync();
-        return RedirectToPage("Index", new { saleListId=entity.SaleListId });
+        return RedirectToPage("/Admin/SaleLists/Edit", new { id=entity.SaleListId, tab="categories" });
     }
 
     public async Task<IActionResult> OnPostDeleteAsync()
@@ -58,7 +58,7 @@ public sealed class EditModel(AppDbContext db, CurrentUser current, AppText text
         if (category is null || !await CanEditList(category.SaleListId)) return NotFound();
         if (await db.Product.AnyAsync(x => x.ProductCategoryId == category.Id)) return BadRequest("Used categories can only be archived.");
         db.ProductCategory.Remove(category); await db.SaveChangesAsync();
-        return RedirectToPage("Index", new { saleListId=category.SaleListId });
+        return RedirectToPage("/Admin/SaleLists/Edit", new { id=category.SaleListId, tab="categories" });
     }
 
     private Task<bool> CanEditList(long id) => current.IsAdmin
