@@ -4,21 +4,31 @@
 @inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
 @{ ViewData["Title"] = T["Sell"]; var token = Antiforgery.GetAndStoreTokens(HttpContext).RequestToken; }
 <meta name="csrf-token" content="@token" />
-<div id="saleApp" data-active-list="@Model.ActiveListId" data-user-id="@Model.UserId" data-ready="@T["Ready"]" data-pending="@T["Pending"]" data-synced="@T["Synced"]" data-all-categories="@T["AllCategories"]" data-other-category="@T["OtherCategory"]">
+<div id="saleApp" data-active-list="@Model.ActiveListId" data-user-id="@Model.UserId" data-ready="@T["Ready"]" data-pending="@T["Pending"]" data-synced="@T["Synced"]" data-all-categories="@T["AllCategories"]" data-other-category="@T["OtherCategory"]" data-order="@T["Order"]" data-empty-order="@T["EmptyOrder"]" data-item="@T["Item"]" data-items="@T["Items"]">
     <div class="sale-head">
         <div><p class="eyebrow"><a asp-page="Shift" asp-route-saleListId="@Model.ActiveListId">◴ @T["CashShift"]</a></p><select id="saleListSelect" class="list-switch" aria-label="@T["SaleLists"]">
         @foreach (var list in Model.Lists) { <option value="@list.Id" selected="@(list.Id == Model.ActiveListId)">@list.Name</option> }
         </select></div>
-        <div class="view-switch" role="group"><button type="button" data-view="tiles" class="active">▦ <span>@T["TileMode"]</span></button><button type="button" data-view="list">☷ <span>@T["ListMode"]</span></button></div>
+        <div class="sale-controls"><div class="view-switch" role="group"><button type="button" data-view="tiles" class="active">▦ <span>@T["TileMode"]</span></button><button type="button" data-view="list">☷ <span>@T["ListMode"]</span></button></div><button type="button" id="restaurantToggle" class="restaurant-toggle" aria-pressed="false" title="@T["RestaurantModeHelp"]">▥ <span>@T["RestaurantMode"]</span></button></div>
     </div>
-    <section class="total-display"><span>@T["Total"]</span><strong id="topTotal">€0.00</strong><small id="syncState">● <span>@T["Ready"]</span></small></section>
-    <nav id="categoryFilter" class="category-filter" aria-label="@T["Categories"]" hidden></nav>
-    @if (Model.Lists.Count == 0) { <div class="empty-state"><strong>@T["NoList"]</strong><p>@T["NoListHelp"]</p></div> }
-    <div id="productGrid" class="product-grid tiles"></div>
-    <button type="button" id="payBar" class="pay-bar" disabled><span><small>@T["Pay"]</small><strong id="bottomTotal">€0.00</strong></span><b>→</b></button>
+    <div class="sale-workspace">
+        <section class="catalog-pane">
+            <section class="total-display"><span>@T["Total"]</span><strong id="topTotal">€0.00</strong><small id="syncState">● <span>@T["Ready"]</span></small></section>
+            <nav id="categoryFilter" class="category-filter" aria-label="@T["Categories"]" hidden></nav>
+            @if (Model.Lists.Count == 0) { <div class="empty-state"><strong>@T["NoList"]</strong><p>@T["NoListHelp"]</p></div> }
+            <div id="productGrid" class="product-grid tiles"></div>
+        </section>
+        <aside class="order-panel" aria-label="@T["Order"]">
+            <header class="order-panel-head"><div><p class="eyebrow">@T["CurrentOrder"]</p><h2>@T["Order"]</h2></div><span id="orderCount" class="badge">0 @T["Items"]</span></header>
+            <div id="orderLines" class="order-lines"><p class="order-empty">@T["EmptyOrder"]</p></div>
+            <div class="order-total"><span>@T["Total"]</span><strong id="orderTotal">€0.00</strong></div>
+            <button type="button" id="payBar" class="pay-bar" disabled><span><small>@T["Pay"]</small><strong id="bottomTotal">€0.00</strong></span><b>→</b></button>
+        </aside>
+    </div>
 </div>
 <dialog id="paymentDialog" class="payment-dialog">
  <form method="dialog"><button class="dialog-close" value="cancel" aria-label="@T["Close"]">×</button></form>
+ <section class="payment-receipt"><div class="payment-receipt-head"><strong>@T["Order"]</strong><span id="paymentItemCount">0 @T["Items"]</span></div><div id="paymentLines" class="payment-lines"></div></section>
  <div id="paymentNormal"><p class="eyebrow">@T["Cash"]</p><h2 id="dueTotal">€0.00</h2><p class="given-label">@T["Given"]</p><div id="givenDisplay" class="given-display">€0.00</div>
  <div class="quick-cash"><button data-cash="500">€5</button><button data-cash="1000">€10</button><button data-cash="2000">€20</button><button data-cash="5000">€50</button></div>
  <div class="keypad">@foreach (var key in new[]{"1","2","3","4","5","6","7","8","9","C","0","⌫"}) { <button type="button" data-key="@key">@key</button> }</div>

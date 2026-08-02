@@ -52,7 +52,10 @@ public sealed class AppText
         ["CategoryExists"] = ("Eine Kategorie mit diesem Namen existiert bereits.", "A category with this name already exists."),
         ["IconTag"] = ("Allgemein", "General"), ["IconDrink"] = ("Getränk", "Drink"), ["IconBeer"] = ("Bier", "Beer"), ["IconFood"] = ("Essen", "Food"),
         ["IconSausage"] = ("Wurst", "Sausage"), ["IconDessert"] = ("Nachtisch", "Dessert"), ["IconCoffee"] = ("Kaffee", "Coffee"), ["IconWine"] = ("Wein", "Wine"),
-        ["IconSnack"] = ("Snack", "Snack"), ["IconIceCream"] = ("Eis", "Ice cream"), ["IconTicket"] = ("Ticket", "Ticket"), ["IconDeposit"] = ("Pfand", "Deposit")
+        ["IconSnack"] = ("Snack", "Snack"), ["IconIceCream"] = ("Eis", "Ice cream"), ["IconTicket"] = ("Ticket", "Ticket"), ["IconDeposit"] = ("Pfand", "Deposit"),
+        ["RestaurantMode"] = ("Kassenlayout", "POS layout"), ["RestaurantModeHelp"] = ("Restaurant-Kassenlayout ein- oder ausschalten", "Enable or disable the restaurant POS layout"),
+        ["Order"] = ("Stückliste", "Order"), ["CurrentOrder"] = ("Aktueller Bon", "Current ticket"), ["EmptyOrder"] = ("Noch keine Produkte ausgewählt.", "No products selected yet."),
+        ["Item"] = ("Artikel", "item"), ["Items"] = ("Artikel", "items")
     };
 
     public string this[string key] => Values.TryGetValue(key, out var value)
