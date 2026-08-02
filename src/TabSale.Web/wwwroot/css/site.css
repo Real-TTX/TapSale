@@ -26,7 +26,8 @@ button { cursor:pointer; }
 .sidebar-head { display:flex; align-items:flex-start; gap:4px; }
 .sidebar-head .logo { flex:1; min-width:0; }
 .logo { display:flex; align-items:center; gap:12px; color:#fff; text-decoration:none; font-size:20px; padding:0 8px 28px; }
-.logo span, .brand-mark { display:grid; place-items:center; width:42px; height:42px; border-radius:14px; background:var(--lime); color:var(--ink); font-weight:900; }
+.logo-mark { display:block; flex:0 0 42px; width:42px; height:42px; border-radius:14px; }
+.brand-mark { display:block; width:72px; height:72px; border-radius:22px; }
 .sidebar-collapse { display:grid; place-items:center; flex:0 0 30px; width:30px; height:30px; border:1px solid rgba(255,255,255,.22); border-radius:9px; background:rgba(255,255,255,.07); color:#fff; font-size:23px; line-height:1; }
 .sidebar-collapse:hover { background:rgba(255,255,255,.15); }
 .sidebar nav { display:grid; align-content:start; gap:7px; flex:1 1 auto; min-height:0; overflow-y:auto; overscroll-behavior:contain; scrollbar-gutter:stable; }
@@ -245,7 +246,7 @@ button { cursor:pointer; }
 
 .auth-shell { min-height:100vh; background:linear-gradient(140deg,var(--ink) 0 47%,color-mix(in srgb,var(--ink),#fff 10%) 47% 100%); display:grid; place-items:center; padding:20px; }
 .auth-card { width:min(440px,100%); background:var(--card); border-radius:26px; padding:36px; box-shadow:0 30px 90px #0005; }
-.auth-card .brand-mark { margin-bottom:22px; }
+.auth-card .brand-mark { margin-bottom:22px; box-shadow:0 12px 28px rgba(16,42,42,.2); }
 .auth-card h1 { font-size:34px; margin:0; }
 .stack-form { display:grid; gap:9px; margin-top:25px; }
 .stack-form label { font-size:13px; font-weight:750; margin-top:5px; }
@@ -324,6 +325,8 @@ td.right, th.right { text-align:right; }
   .sidebar-collapse { display:none; }
   .mobile-header { display:flex; height:58px; background:var(--ink); color:#fff; align-items:center; justify-content:space-between; padding:0 18px; position:sticky; top:0; z-index:15; }
   .mobile-header button { border:0; background:none; color:#fff; font-size:23px; }
+  .mobile-brand { display:flex; align-items:center; gap:9px; }
+  .mobile-brand img { width:34px; height:34px; border-radius:10px; }
   .network-dot { width:10px; height:10px; border-radius:50%; background:#62d4a8; }
   .network-dot.offline { background:#f0aa52; }
   .content { padding:20px 14px 110px; }

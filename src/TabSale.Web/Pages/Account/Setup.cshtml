@@ -3,7 +3,7 @@
 @inject TabSale.Web.Services.AppText T
 @{ ViewData["Title"] = T["Setup"]; Layout = "_AuthLayout"; }
 <div class="auth-card">
-    <div class="brand-mark">TS</div><p class="eyebrow">TABSALE</p><h1>@T["Setup"]</h1>
+    <img class="brand-mark" src="~/icons/app-icon.svg" alt="TabSale"/><p class="eyebrow">TABSALE</p><h1>@T["Setup"]</h1>
     <p class="muted">@T["SetupHelp"]</p>
     <form method="post" class="stack-form">
         <div asp-validation-summary="ModelOnly" class="validation"></div>

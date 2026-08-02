@@ -1,46 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
-  <title id="title">TabSale Registrierkasse</title>
-  <defs>
-    <linearGradient id="background" x1="72" y1="44" x2="440" y2="468" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#173F3B"/>
-      <stop offset="1" stop-color="#0A2021"/>
-    </linearGradient>
-    <linearGradient id="register" x1="142" y1="182" x2="378" y2="424" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#F0FA82"/>
-      <stop offset="1" stop-color="#CFDF4E"/>
-    </linearGradient>
-    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
-      <feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#061515" flood-opacity=".45"/>
-    </filter>
-  </defs>
-
-  <rect width="512" height="512" rx="112" fill="url(#background)"/>
-  <circle cx="414" cy="96" r="74" fill="#167D6D" opacity=".22"/>
-  <circle cx="92" cy="414" r="96" fill="#E4F26B" opacity=".08"/>
-
-  <g filter="url(#shadow)">
-    <path d="M194 70h124a14 14 0 0 1 14 14v118H180V84a14 14 0 0 1 14-14Z" fill="#F7F9F3"/>
-    <path d="M180 182h152v31l-13-10-13 10-13-10-13 10-13-10-13 10-13-10-13 10-13-10-13 10-12-9Z" fill="#F7F9F3"/>
-    <path d="M287 111c-9-10-20-15-33-15-25 0-43 19-43 45s18 45 43 45c13 0 24-5 33-15" fill="none" stroke="#167D6D" stroke-width="13" stroke-linecap="round"/>
-    <path d="M198 131h69M198 152h61" fill="none" stroke="#167D6D" stroke-width="11" stroke-linecap="round"/>
-
-    <path d="M151 188h210c14 0 26 10 30 23l34 116H87l34-116c4-13 16-23 30-23Z" fill="url(#register)"/>
-    <path d="M151 211h210c5 0 10 4 12 9l24 82H115l24-82c2-5 7-9 12-9Z" fill="#102A2A"/>
-
-    <rect x="153" y="231" width="116" height="48" rx="12" fill="#167D6D"/>
-    <path d="M174 255h74" stroke="#B9F0DF" stroke-width="10" stroke-linecap="round"/>
-    <g fill="#E4F26B">
-      <rect x="292" y="230" width="25" height="21" rx="6"/>
-      <rect x="327" y="230" width="25" height="21" rx="6"/>
-      <rect x="362" y="230" width="25" height="21" rx="6"/>
-      <rect x="292" y="260" width="25" height="21" rx="6"/>
-      <rect x="327" y="260" width="25" height="21" rx="6"/>
-      <rect x="362" y="260" width="25" height="21" rx="6"/>
-    </g>
-
-    <path d="M100 307h312c13 0 24 11 24 24v91c0 13-11 24-24 24H100c-13 0-24-11-24-24v-91c0-13 11-24 24-24Z" fill="url(#register)"/>
-    <rect x="105" y="334" width="302" height="80" rx="18" fill="#F7F9F3"/>
-    <rect x="197" y="352" width="118" height="18" rx="9" fill="#102A2A"/>
-    <circle cx="366" cy="375" r="13" fill="#167D6D"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">TabSale Logo</title>
+  <desc id="desc">Eine stilisierte Registrierkasse mit einem T auf dem Kassenbon.</desc>
+  <rect width="512" height="512" rx="112" fill="#102A2A"/>
+  <circle cx="422" cy="92" r="58" fill="#167D6D" opacity=".24"/>
+  <circle cx="82" cy="422" r="72" fill="#E4F26B" opacity=".09"/>
+  <path d="M196 64h120c11 0 20 9 20 20v142H176V84c0-11 9-20 20-20Z" fill="#F8FAF5"/>
+  <path d="M211 105h90v20h-35v64h-20v-64h-35Z" fill="#167D6D"/>
+  <path d="M176 200h160v32l-16-12-16 12-16-12-16 12-16-12-16 12-16-12-16 12-16-12-10 8Z" fill="#F8FAF5"/>
+  <path d="M134 205h244c13 0 24 9 28 21l35 117H71l35-117c4-12 15-21 28-21Z" fill="#E4F26B"/>
+  <rect x="137" y="237" width="142" height="70" rx="16" fill="#102A2A"/>
+  <rect x="158" y="258" width="100" height="14" rx="7" fill="#8DD3C7"/>
+  <rect x="158" y="282" width="64" height="10" rx="5" fill="#167D6D"/>
+  <g fill="#102A2A">
+    <rect x="288" y="239" width="26" height="27" rx="8"/><rect x="328" y="239" width="26" height="27" rx="8"/><rect x="368" y="239" width="26" height="27" rx="8"/>
+    <rect x="288" y="279" width="26" height="27" rx="8"/><rect x="328" y="279" width="26" height="27" rx="8"/><rect x="368" y="279" width="26" height="27" rx="8"/>
   </g>
+  <rect x="64" y="326" width="384" height="126" rx="30" fill="#E4F26B"/>
+  <rect x="96" y="352" width="320" height="72" rx="19" fill="#F8FAF5"/>
+  <rect x="202" y="372" width="108" height="17" rx="8.5" fill="#102A2A"/>
+  <circle cx="374" cy="388" r="12" fill="#167D6D"/>
 </svg>
