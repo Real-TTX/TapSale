@@ -15,16 +15,21 @@
     if (event.matches) setMobileMenu(false);
   });
   const collapseButton = document.getElementById('sidebarCollapse');
+  const reopenButton = document.getElementById('sidebarReopen');
   const applySidebarState = collapsed => {
     document.body.classList.toggle('sidebar-collapsed', collapsed);
     collapseButton?.setAttribute('aria-expanded', String(!collapsed));
-    if (collapseButton) collapseButton.textContent = collapsed ? '›' : '‹';
+    reopenButton?.setAttribute('aria-expanded', String(!collapsed));
   };
   applySidebarState(localStorage.tabsaleSidebarCollapsed === 'true');
   collapseButton?.addEventListener('click', () => {
     const collapsed = !document.body.classList.contains('sidebar-collapsed');
     localStorage.tabsaleSidebarCollapsed = String(collapsed);
     applySidebarState(collapsed);
+  });
+  reopenButton?.addEventListener('click', () => {
+    localStorage.tabsaleSidebarCollapsed = 'false';
+    applySidebarState(false);
   });
   const dot = document.getElementById('networkDot');
   const paintNetwork = () => dot?.classList.toggle('offline', !navigator.onLine);
