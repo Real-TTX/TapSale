@@ -16,14 +16,15 @@
   });
   const collapseButton = document.getElementById('sidebarCollapse');
   const reopenButton = document.getElementById('sidebarReopen');
+  const root = document.documentElement;
   const applySidebarState = collapsed => {
-    document.body.classList.toggle('sidebar-collapsed', collapsed);
+    root.classList.toggle('sidebar-collapsed', collapsed);
     collapseButton?.setAttribute('aria-expanded', String(!collapsed));
     reopenButton?.setAttribute('aria-expanded', String(!collapsed));
   };
   applySidebarState(localStorage.tabsaleSidebarCollapsed === 'true');
   collapseButton?.addEventListener('click', () => {
-    const collapsed = !document.body.classList.contains('sidebar-collapsed');
+    const collapsed = !root.classList.contains('sidebar-collapsed');
     localStorage.tabsaleSidebarCollapsed = String(collapsed);
     applySidebarState(collapsed);
   });
