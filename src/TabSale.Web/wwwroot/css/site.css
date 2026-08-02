@@ -84,6 +84,26 @@ button { cursor:pointer; }
 .category-chip span { display:grid; place-items:center; width:28px; height:28px; font-size:20px; }
 .category-chip strong { font-size:14px; }
 .category-chip.active { border-color:var(--category-color); background:color-mix(in srgb,var(--category-color),var(--card) 88%); color:var(--ink); box-shadow:0 5px 16px color-mix(in srgb,var(--category-color),transparent 78%); }
+.category-back { display:flex; align-items:center; gap:11px; min-height:48px; padding:7px 14px 7px 8px; border:1px solid var(--line); border-radius:14px; background:var(--card); text-align:left; }
+.category-back > b { display:grid; place-items:center; width:34px; height:34px; border-radius:10px; background:var(--ink); color:#fff; font-size:20px; }
+.category-back span, .category-back small, .category-back strong { display:block; }
+.category-back small { color:var(--muted); font-size:11px; }
+.category-back strong { margin-top:1px; font-size:14px; }
+.category-selection { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:14px; }
+.category-card { display:grid; grid-template-columns:52px minmax(0,1fr) 32px; align-items:center; gap:12px; min-height:112px; padding:16px; border:1px solid var(--line); border-left:6px solid var(--category-color); border-radius:18px; background:var(--card); text-align:left; box-shadow:0 4px 16px rgba(16,42,42,.04); }
+.category-card:hover, .category-card:focus-visible { border-color:var(--category-color); background:color-mix(in srgb,var(--category-color),var(--card) 92%); }
+.category-card-icon { display:grid; place-items:center; width:52px; height:52px; border-radius:14px; background:color-mix(in srgb,var(--category-color),var(--card) 86%); font-size:28px; }
+.category-card-copy { min-width:0; }
+.category-card-copy strong, .category-card-copy small { display:block; }
+.category-card-copy strong { overflow:hidden; text-overflow:ellipsis; font-size:17px; white-space:nowrap; }
+.category-card-copy small { margin-top:5px; color:var(--muted); font-size:13px; }
+.category-card > b { color:var(--category-color); font-size:22px; }
+.product-sections { display:grid; gap:28px; }
+.product-section { min-width:0; }
+.category-section-title { display:flex; align-items:center; gap:10px; margin:0 0 12px; padding:9px 12px; border-left:5px solid var(--category-color); border-radius:11px; background:color-mix(in srgb,var(--category-color),var(--card) 91%); }
+.category-section-title span { font-size:22px; }
+.category-section-title strong { flex:1; font-size:18px; }
+.category-section-title small { display:grid; place-items:center; min-width:28px; height:28px; border-radius:999px; background:var(--card); color:var(--muted); font-size:12px; }
 
 .product-grid.tiles { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
 .product-grid.list { display:grid; gap:10px; }
@@ -217,6 +237,10 @@ button { cursor:pointer; }
   .product-grid.tiles .product-add > b, .product-grid.tiles .product-minus { bottom:12px; width:38px; height:38px; min-width:38px; border-radius:11px; }
   .product-grid.tiles .product-add > b { right:12px; }
   .product-grid.tiles .product-minus { left:12px; }
+  .category-selection { gap:10px; }
+  .category-card { min-height:96px; padding:12px; }
+  .product-sections { gap:20px; }
+  .category-section-title { margin-bottom:9px; }
 }
 
 .auth-shell { min-height:100vh; background:linear-gradient(140deg,var(--ink) 0 47%,color-mix(in srgb,var(--ink),#fff 10%) 47% 100%); display:grid; place-items:center; padding:20px; }
@@ -310,6 +334,12 @@ td.right, th.right { text-align:right; }
   .total-display strong { font-size:42px; }
   .product-grid.tiles { gap:10px; }
   .category-filter { margin-inline:-14px; padding-inline:14px; }
+  .category-selection { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+  .category-card { grid-template-columns:44px minmax(0,1fr) 22px; min-height:92px; gap:9px; padding:11px; border-radius:15px; }
+  .category-card-icon { width:44px; height:44px; border-radius:12px; font-size:24px; }
+  .category-card-copy strong { font-size:15px; }
+  .category-card-copy small { font-size:11px; }
+  .product-sections { gap:20px; }
   .product-card, .product-add { min-height:132px; }
   .product-copy strong { font-size:16px; }
   .pay-bar, .sidebar-collapsed .pay-bar { left:50%; width:calc(100vw - 24px); bottom:max(10px,env(safe-area-inset-bottom)); }

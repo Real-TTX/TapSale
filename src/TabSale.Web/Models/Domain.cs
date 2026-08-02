@@ -14,6 +14,7 @@ public abstract class AuditEntity
 public enum UserRole { Admin, Manager, User }
 public enum ProductKind { Product, DepositCharge, DepositReturn }
 public enum SaleKind { Sale, Cancellation }
+public enum CategoryDisplayMode { Filter, Sections, Drilldown }
 
 public sealed class AppUser : AuditEntity
 {
@@ -41,6 +42,7 @@ public sealed class SaleList : AuditEntity
 {
     [MaxLength(120)] public required string Name { get; set; }
     public bool IsActive { get; set; } = true;
+    public CategoryDisplayMode CategoryDisplayMode { get; set; } = CategoryDisplayMode.Filter;
     public List<Product> Products { get; set; } = [];
     public List<ProductCategory> Categories { get; set; } = [];
     public List<UserSaleList> Users { get; set; } = [];

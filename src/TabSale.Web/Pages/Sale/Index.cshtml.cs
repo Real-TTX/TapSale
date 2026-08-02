@@ -21,7 +21,7 @@ public sealed class IndexModel(AppDbContext db, CurrentUser current) : PageModel
         ActiveListId = Lists.Any(x => x.Id == listId) ? listId : Lists.FirstOrDefault()?.Id;
         var catalog = await query.Select(x => new
         {
-            id = x.Id, name = x.Name,
+            id = x.Id, name = x.Name, categoryDisplayMode = x.CategoryDisplayMode.ToString(),
             products = x.Products.Where(p => p.IsActive)
                 .OrderBy(p => p.ProductCategory == null ? int.MaxValue : p.ProductCategory.SortOrder).ThenBy(p => p.SortOrder).ThenBy(p => p.Name)
                 .Select(p => new

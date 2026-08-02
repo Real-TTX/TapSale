@@ -4,7 +4,7 @@
 @inject TabSale.Web.Services.AppText T
 @{ ViewData["Title"] = Model.Input.Id == 0 ? T["NewSaleList"] : Model.Input.Name; }
 <div class="page-title"><div><p class="eyebrow">@T["SaleLists"]</p><h1>@ViewData["Title"]</h1></div></div>
-<form method="post" class="panel stack-form"><div asp-validation-summary="ModelOnly" class="validation"></div><input type="hidden" asp-for="Input.Id"/><label asp-for="Input.Name">@T["Name"]</label><input asp-for="Input.Name"/><label class="check"><input asp-for="Input.IsActive"/> @T["Active"]</label>
+<form method="post" class="panel stack-form"><div asp-validation-summary="ModelOnly" class="validation"></div><input type="hidden" asp-for="Input.Id"/><label asp-for="Input.Name">@T["Name"]</label><input asp-for="Input.Name"/><label asp-for="Input.CategoryDisplayMode">@T["CategoryDisplay"]</label><select asp-for="Input.CategoryDisplayMode"><option value="Filter">@T["CategoryFilterMode"]</option><option value="Sections">@T["CategorySectionsMode"]</option><option value="Drilldown">@T["CategoryDrilldownMode"]</option></select><label class="check"><input asp-for="Input.IsActive"/> @T["Active"]</label>
 <div class="button-row"><button class="btn btn-primary" asp-page-handler="Save">@T["Save"]</button><a class="btn btn-light" asp-page="Index">@T["Back"]</a>@if(Model.CanDelete){<button class="btn btn-danger delete-space" asp-page-handler="Delete" onclick="return confirm('@T["DeleteConfirm"]')">@T["Delete"]</button>}</div></form>
 @if(Model.Input.Id != 0){
 <section class="panel section-gap">

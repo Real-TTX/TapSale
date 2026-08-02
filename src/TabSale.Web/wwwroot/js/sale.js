@@ -24,6 +24,7 @@
     synced:app.dataset.synced,
     all:app.dataset.allCategories,
     other:app.dataset.otherCategory,
+    backCategories:app.dataset.backCategories,
     order:app.dataset.order,
     emptyOrder:app.dataset.emptyOrder,
     item:app.dataset.item,
@@ -60,20 +61,32 @@
     storeCart(); render();
   };
 
-  function renderCategoryFilter() {
+  function categoryInfo() {
     const products = currentList().products;
     const categories = [...new Map(products.filter(x => x.categoryId).map(x => [String(x.categoryId), {
       id:String(x.categoryId), name:x.categoryName, icon:x.categoryIcon, color:x.categoryColor, sortOrder:x.categorySortOrder
     }])).values()].sort((a, b) => a.sortOrder - b.sortOrder || a.name.localeCompare(b.name));
     const hasOther = products.some(x => !x.categoryId);
-    if (!categories.length) {
-      categoryFilter.hidden = true;
-      activeCategory = 'all';
-      return;
-    }
+    return { categories, hasOther };
+  }
 
+  const matchesCategory = (product, categoryId) => categoryId === 'all'
+    || (categoryId === 'other' ? !product.categoryId : String(product.categoryId) === categoryId);
+  const selectCategory = categoryId => {
+    activeCategory = categoryId;
+    localStorage.setItem(categoryKey(), categoryId);
+    render();
+  };
+
+  function normalizeCategory({ categories, hasOther }) {
     const valid = activeCategory === 'all' || categories.some(x => x.id === activeCategory) || (activeCategory === 'other' && hasOther);
     if (!valid) activeCategory = 'all';
+  }
+
+  function renderCategoryFilter(info) {
+    const { categories, hasOther } = info;
+    if (!categories.length) { categoryFilter.hidden = true; activeCategory = 'all'; return; }
+
     categoryFilter.hidden = false;
     categoryFilter.innerHTML = '';
 
@@ -86,17 +99,44 @@
       const icon = document.createElement('span'); icon.textContent = symbol;
       const name = document.createElement('strong'); name.textContent = label;
       button.append(icon, name);
-      button.onclick = () => {
-        activeCategory = id;
-        localStorage.setItem(categoryKey(), id);
-        render();
-      };
+      button.onclick = () => selectCategory(id);
       categoryFilter.append(button);
     };
 
     addButton('all', words.all, '▦', 'var(--brand)');
     categories.forEach(category => addButton(category.id, category.name, iconSymbols[category.icon] || iconSymbols.tag, category.color));
     if (hasOther) addButton('other', words.other, '•••', 'var(--muted)');
+  }
+
+  function renderCategoryBack(info) {
+    categoryFilter.innerHTML = '';
+    if (activeCategory === 'all') { categoryFilter.hidden = true; return; }
+    const category = activeCategory === 'other' ? { name:words.other, icon:null, color:'var(--muted)' }
+      : info.categories.find(x => x.id === activeCategory);
+    const button = document.createElement('button');
+    button.type = 'button'; button.className = 'category-back';
+    const arrow = document.createElement('b'); arrow.textContent = '←';
+    const copy = document.createElement('span');
+    const label = document.createElement('small'); label.textContent = words.backCategories;
+    const name = document.createElement('strong'); name.textContent = category?.name || words.all;
+    copy.append(label, name); button.append(arrow, copy);
+    button.onclick = () => selectCategory('all');
+    categoryFilter.append(button); categoryFilter.hidden = false;
+  }
+
+  function createCategoryCard(category, count) {
+    const card = document.createElement('button');
+    card.type = 'button'; card.className = 'category-card';
+    card.style.setProperty('--category-color', category.color || 'var(--brand)');
+    const icon = document.createElement('span'); icon.className = 'category-card-icon';
+    icon.textContent = category.id === 'other' ? '•••' : (iconSymbols[category.icon] || iconSymbols.tag);
+    const copy = document.createElement('span'); copy.className = 'category-card-copy';
+    const name = document.createElement('strong'); name.textContent = category.name;
+    const amount = document.createElement('small'); amount.textContent = `${count} ${count === 1 ? words.item : words.items}`;
+    copy.append(name, amount);
+    const arrow = document.createElement('b'); arrow.textContent = '→';
+    card.append(icon, copy, arrow); card.onclick = () => selectCategory(category.id);
+    return card;
   }
 
   function createOrderVisual(product) {
@@ -148,30 +188,68 @@
     }
   }
 
+  function createProductCard(product) {
+    const count = cart[product.id] || 0;
+    const element = document.createElement('article');
+    element.className = `product-card ${product.kind === 'DepositReturn' ? 'return' : ''} ${count > 0 ? 'has-count' : ''}`;
+    element.style.setProperty('--product-color', product.color);
+    const visual = product.imageUrl
+      ? `<img class="product-image" src="${product.imageUrl}" alt="" draggable="false">`
+      : (iconSymbols[product.icon] || iconSymbols.tag);
+    element.innerHTML = `<button class="product-add" type="button" aria-label="Add"><span class="product-icon">${visual}</span><span class="product-copy"><strong></strong><small>${euro.format(signedPrice(product)/100)}</small><em class="product-count">${count}×</em></span><b aria-hidden="true">+</b></button><button class="product-minus" type="button" aria-label="Remove" ${count === 0 ? 'disabled' : ''}>−</button>`;
+    element.querySelector('strong').textContent = product.name;
+    element.querySelector('.product-add').onclick = () => setQuantity(product.id, count + 1);
+    element.querySelector('.product-minus').onclick = event => {
+      event.stopPropagation();
+      setQuantity(product.id, count - 1);
+    };
+    return element;
+  }
+
+  function renderSections(info, mode) {
+    categoryFilter.hidden = true;
+    categoryFilter.innerHTML = '';
+    grid.className = 'product-sections';
+    const groups = info.categories.map(category => ({
+      ...category, products:currentList().products.filter(product => matchesCategory(product, category.id))
+    }));
+    if (info.hasOther) groups.push({ id:'other', name:words.other, icon:null, color:'var(--muted)', products:currentList().products.filter(product => !product.categoryId) });
+    for (const group of groups) {
+      const section = document.createElement('section'); section.className = 'product-section';
+      const heading = document.createElement('h2'); heading.className = 'category-section-title';
+      heading.style.setProperty('--category-color', group.color || 'var(--brand)');
+      const icon = document.createElement('span'); icon.textContent = group.id === 'other' ? '•••' : (iconSymbols[group.icon] || iconSymbols.tag);
+      const name = document.createElement('strong'); name.textContent = group.name;
+      const count = document.createElement('small'); count.textContent = String(group.products.length);
+      heading.append(icon, name, count);
+      const products = document.createElement('div'); products.className = `product-grid ${mode}`;
+      group.products.forEach(product => products.append(createProductCard(product)));
+      section.append(heading, products); grid.append(section);
+    }
+  }
+
   function render() {
     const mode = localStorage.tabsaleView || 'tiles';
-    grid.className = `product-grid ${mode}`;
     grid.innerHTML = '';
-    renderCategoryFilter();
-    const products = currentList().products.filter(product => activeCategory === 'all'
-      || (activeCategory === 'other' ? !product.categoryId : String(product.categoryId) === activeCategory));
+    const info = categoryInfo();
+    normalizeCategory(info);
+    const categoryMode = currentList().categoryDisplayMode || 'Filter';
 
-    for (const product of products) {
-      const count = cart[product.id] || 0;
-      const element = document.createElement('article');
-      element.className = `product-card ${product.kind === 'DepositReturn' ? 'return' : ''} ${count > 0 ? 'has-count' : ''}`;
-      element.style.setProperty('--product-color', product.color);
-      const visual = product.imageUrl
-        ? `<img class="product-image" src="${product.imageUrl}" alt="" draggable="false">`
-        : (iconSymbols[product.icon] || iconSymbols.tag);
-      element.innerHTML = `<button class="product-add" type="button" aria-label="Add"><span class="product-icon">${visual}</span><span class="product-copy"><strong></strong><small>${euro.format(signedPrice(product)/100)}</small><em class="product-count">${count}×</em></span><b aria-hidden="true">+</b></button><button class="product-minus" type="button" aria-label="Remove" ${count === 0 ? 'disabled' : ''}>−</button>`;
-      element.querySelector('strong').textContent = product.name;
-      element.querySelector('.product-add').onclick = () => setQuantity(product.id, count + 1);
-      element.querySelector('.product-minus').onclick = event => {
-        event.stopPropagation();
-        setQuantity(product.id, count - 1);
-      };
-      grid.append(element);
+    if (categoryMode === 'Sections' && info.categories.length) {
+      activeCategory = 'all';
+      renderSections(info, mode);
+    } else if (categoryMode === 'Drilldown' && info.categories.length && activeCategory === 'all') {
+      categoryFilter.hidden = true;
+      categoryFilter.innerHTML = '';
+      grid.className = 'category-selection';
+      info.categories.forEach(category => grid.append(createCategoryCard(category, currentList().products.filter(product => matchesCategory(product, category.id)).length)));
+      if (info.hasOther) grid.append(createCategoryCard({ id:'other', name:words.other, icon:null, color:'var(--muted)' }, currentList().products.filter(product => !product.categoryId).length));
+    } else {
+      grid.className = `product-grid ${mode}`;
+      if (categoryMode === 'Drilldown' && info.categories.length) renderCategoryBack(info);
+      else renderCategoryFilter(info);
+      const products = currentList().products.filter(product => categoryMode === 'Filter' ? matchesCategory(product, activeCategory) : (categoryMode === 'Drilldown' ? matchesCategory(product, activeCategory) : true));
+      products.forEach(product => grid.append(createProductCard(product)));
     }
 
     const value = total();

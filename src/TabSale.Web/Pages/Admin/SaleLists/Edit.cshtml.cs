@@ -29,7 +29,7 @@ public sealed class EditModel(AppDbContext db, CurrentUser current) : PageModel
 
         var entity = await Allowed().AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
         if (entity is null) return NotFound();
-        Input = new InputModel { Id=entity.Id, Name=entity.Name, IsActive=entity.IsActive };
+        Input = new InputModel { Id=entity.Id, Name=entity.Name, IsActive=entity.IsActive, CategoryDisplayMode=entity.CategoryDisplayMode };
 
         var productQuery = db.Product.AsNoTracking().Include(x => x.ProductCategory).Where(x => x.SaleListId == entity.Id);
         var categoryQuery = db.ProductCategory.AsNoTracking().Include(x => x.Products).Where(x => x.SaleListId == entity.Id);
@@ -54,13 +54,13 @@ public sealed class EditModel(AppDbContext db, CurrentUser current) : PageModel
         if (Input.Id == 0)
         {
             if (!current.IsAdmin) return Forbid();
-            entity = new SaleList { Name=Input.Name.Trim(), CreateUserId=current.Id, UpdateUserId=current.Id };
+            entity = new SaleList { Name=Input.Name.Trim(), CategoryDisplayMode=Input.CategoryDisplayMode, CreateUserId=current.Id, UpdateUserId=current.Id };
             db.SaleList.Add(entity);
         }
         else
         {
             entity = await Allowed().SingleOrDefaultAsync(x => x.Id == Input.Id) ?? throw new InvalidOperationException();
-            entity.Name=Input.Name.Trim(); entity.IsActive=Input.IsActive; entity.UpdateUserId=current.Id;
+            entity.Name=Input.Name.Trim(); entity.IsActive=Input.IsActive; entity.CategoryDisplayMode=Input.CategoryDisplayMode; entity.UpdateUserId=current.Id;
         }
         await db.SaveChangesAsync();
         return RedirectToPage("Edit", new { id=entity.Id });
@@ -85,5 +85,6 @@ public sealed class EditModel(AppDbContext db, CurrentUser current) : PageModel
         public long Id { get; set; }
         [Required, MaxLength(120)] public string Name { get; set; } = "";
         public bool IsActive { get; set; } = true;
+        public CategoryDisplayMode CategoryDisplayMode { get; set; } = CategoryDisplayMode.Filter;
     }
 }
