@@ -4,7 +4,7 @@
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/><meta name="theme-color" content="#102A2A"/><meta name="apple-mobile-web-app-capable" content="yes"/>
 <title>@ViewData["Title"] · TabSale</title><link rel="manifest" href="~/manifest.webmanifest"/><link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
 </head><body><div class="app-shell">
-<aside class="sidebar" id="sidebar"><a class="logo" asp-page="/Sale/Index"><span>TS</span><strong>TabSale</strong></a>
+<aside class="sidebar" id="sidebar"><div class="sidebar-head"><a class="logo" asp-page="/Sale/Index"><span>TS</span><strong>TabSale</strong></a><button type="button" id="sidebarCollapse" class="sidebar-collapse" aria-label="Menü einklappen" title="Menü einklappen">‹</button></div>
 <nav><a asp-page="/Sale/Index">▦ <span>@T["Sell"]</span></a><a asp-page="/History/Index">◷ <span>@T["History"]</span></a>
 @if (Current.IsManager) { <a asp-page="/Admin/SaleLists/Index">▤ <span>@T["SaleLists"]</span></a> }
 @if (Current.IsAdmin) { <a asp-page="/Admin/Users/Index">♙ <span>@T["Users"]</span></a> }
