@@ -367,6 +367,43 @@ td.right, th.right { text-align:right; }
   .list-actions, .button-row { margin-top:16px; }
 }
 
+@media (min-width:761px) and (max-width:1280px) and (pointer:fine), (min-width:761px) and (max-width:1440px) and (max-height:900px) and (pointer:fine) {
+  body { --sidebar-width:180px; }
+  .sidebar { width:180px; padding:14px 9px max(14px,env(safe-area-inset-bottom)); }
+  .logo { gap:8px; padding:0 5px 13px; font-size:17px; }
+  .logo-mark { flex-basis:34px; width:34px; height:34px; border-radius:10px; }
+  .sidebar-collapse { width:27px; height:27px; flex-basis:27px; border-radius:8px; font-size:20px; }
+  .sidebar nav { gap:2px; }
+  .sidebar nav a, .nav-button { padding:8px 9px; border-radius:9px; font-size:14px; }
+  .sidebar-bottom { margin-top:6px; }
+  .user-chip { gap:7px; padding:8px 5px; }
+  .user-chip .avatar { width:30px; height:30px; font-size:12px; }
+  .user-chip strong { font-size:13px; }
+  .user-chip small { font-size:11px; }
+  .language-switch { gap:4px; padding:4px; }
+  .language-switch button { padding:4px 8px; }
+  .content { padding:14px 16px 88px; }
+  .sidebar-collapsed .content { padding-left:72px; }
+  .sale-head { margin-bottom:8px; }
+  .list-switch { font-size:22px; }
+  .total-display { padding:8px 13px; border-radius:13px; }
+  .total-display strong { font-size:28px; }
+  .category-chip { min-height:34px; padding:3px 9px 3px 5px; }
+  .category-chip span { width:23px; height:23px; font-size:16px; }
+  .category-chip strong { font-size:12px; }
+  .product-grid.tiles { grid-template-columns:repeat(auto-fill,minmax(135px,1fr)); gap:7px; }
+  .product-grid.tiles .product-card, .product-grid.tiles .product-add { min-height:108px; border-radius:14px; }
+  .product-grid.tiles .product-add { display:grid; grid-template-columns:38px minmax(0,1fr); align-items:center; gap:9px; padding:25px 9px 41px; }
+  .product-grid.tiles .product-icon { width:38px; height:38px; border-radius:10px; font-size:22px; }
+  .product-grid.tiles .product-copy { min-width:0; }
+  .product-grid.tiles .product-copy strong { overflow:hidden; text-overflow:ellipsis; font-size:14px; white-space:nowrap; }
+  .product-grid.tiles .product-copy small { margin-top:2px; font-size:12px; }
+  .product-grid.tiles .product-count { top:7px; right:9px; min-width:31px; height:23px; padding-inline:6px; font-size:13px; }
+  .product-grid.tiles .product-add > b, .product-grid.tiles .product-minus { bottom:8px; width:32px; height:32px; min-width:32px; border-radius:9px; }
+  .product-grid.tiles .product-add > b { right:9px; }
+  .product-grid.tiles .product-minus { left:9px; }
+}
+
 @media (max-width:760px) {
   .app-shell { display:block; }
   .sidebar, .sidebar-collapsed .sidebar { left:-260px; width:240px; padding:24px 16px max(24px,env(safe-area-inset-bottom)); transform:none; transition:left .2s; }
