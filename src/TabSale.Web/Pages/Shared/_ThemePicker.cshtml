@@ -1,3 +1,5 @@
+@inject TabSale.Web.Services.AppText T
+<div class="theme-control">
 <label class="theme-picker-wrap">
   <span>Theme</span>
   <select class="theme-picker" aria-label="Theme">
@@ -5,5 +7,18 @@
     <option value="winter">Winter</option>
     <option value="market">Market</option>
     <option value="contrast">High contrast</option>
+    <option value="custom">@T["CustomTheme"]</option>
   </select>
 </label>
+<details class="theme-customizer">
+  <summary>@T["Colors"]</summary>
+  <div class="theme-color-grid">
+    <label><span>@T["NavigationColor"]</span><input type="color" data-theme-color="ink" value="#102a2a"/></label>
+    <label><span>@T["PrimaryColor"]</span><input type="color" data-theme-color="brand" value="#167d6d"/></label>
+    <label><span>@T["AccentColor"]</span><input type="color" data-theme-color="lime" value="#e4f26b"/></label>
+    <label><span>@T["BackgroundColor"]</span><input type="color" data-theme-color="paper" value="#f4f6f1"/></label>
+    <label><span>@T["DangerColor"]</span><input type="color" data-theme-color="danger" value="#bc3c3c"/></label>
+  </div>
+  <button type="button" class="theme-reset">@T["ResetColors"]</button>
+</details>
+</div>

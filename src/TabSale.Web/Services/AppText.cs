@@ -36,7 +36,10 @@ public sealed class AppText
         ["Ready"] = ("Bereit", "Ready"), ["Pending"] = ("ausstehend", "pending"), ["Synced"] = ("Synchronisiert", "Synced"), ["NoList"] = ("Keine Verkaufsliste zugewiesen", "No sale list assigned"), ["NoListHelp"] = ("Bitte einen Admin um die Zuweisung einer Verkaufsliste.", "Ask an administrator to assign a sale list."),
         ["Given"] = ("Gegeben", "Given"), ["ConfirmPayout"] = ("Bestätige die Barauszahlung an den Kunden.", "Confirm the cash payout to the customer."), ["Close"] = ("Schließen", "Close"),
         ["SetupHelp"] = ("Erstelle den ersten Administrator. Danach ist diese Seite dauerhaft deaktiviert.", "Create the first administrator. This page is permanently disabled afterwards."),
-        ["LoginHelp"] = ("Schnell und zuverlässig verkaufen – auch offline.", "Fast, reliable selling — even offline."), ["DeleteConfirm"] = ("Wirklich endgültig löschen?", "Delete permanently?")
+        ["LoginHelp"] = ("Schnell und zuverlässig verkaufen – auch offline.", "Fast, reliable selling — even offline."), ["DeleteConfirm"] = ("Wirklich endgültig löschen?", "Delete permanently?"),
+        ["CustomTheme"] = ("Eigenes CI", "Custom brand"), ["Colors"] = ("Farben", "Colors"), ["NavigationColor"] = ("Navigation", "Navigation"),
+        ["PrimaryColor"] = ("Primär", "Primary"), ["AccentColor"] = ("Akzent", "Accent"), ["BackgroundColor"] = ("Hintergrund", "Background"),
+        ["DangerColor"] = ("Warnung", "Danger"), ["ResetColors"] = ("Farben zurücksetzen", "Reset colors")
     };
 
     public string this[string key] => Values.TryGetValue(key, out var value)
