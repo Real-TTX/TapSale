@@ -197,6 +197,28 @@ button { cursor:pointer; }
   .restaurant-layout .pay-bar, .sidebar-collapsed .restaurant-layout .pay-bar { position:static; left:auto; bottom:auto; transform:none; width:100%; margin-top:14px; border-radius:15px; padding:14px 17px; }
 }
 
+@media (min-width:761px) and (max-width:1366px) {
+  .content { padding:22px 24px 104px; }
+  .sidebar-collapsed .content { padding-left:86px; }
+  .sale-head { align-items:center; gap:14px; margin-bottom:14px; }
+  .list-switch { max-width:52vw; font-size:28px; }
+  .total-display { margin-bottom:12px; padding:12px 18px; border-radius:16px; }
+  .total-display strong { font-size:36px; }
+  .category-filter { gap:7px; margin:0 0 10px; padding:3px 2px 6px; }
+  .category-chip { min-height:40px; padding:5px 11px 5px 7px; }
+  .category-chip span { width:26px; height:26px; font-size:18px; }
+  .product-grid.tiles { grid-template-columns:repeat(auto-fill,minmax(170px,1fr)); gap:10px; }
+  .product-grid.tiles .product-card, .product-grid.tiles .product-add { min-height:128px; }
+  .product-grid.tiles .product-add { gap:8px; padding:40px 12px 58px; }
+  .product-grid.tiles .product-icon { width:48px; height:48px; border-radius:12px; font-size:27px; }
+  .product-grid.tiles .product-copy strong { font-size:16px; }
+  .product-grid.tiles .product-copy small { margin-top:3px; font-size:14px; }
+  .product-grid.tiles .product-count { top:10px; right:12px; min-width:36px; height:27px; font-size:15px; }
+  .product-grid.tiles .product-add > b, .product-grid.tiles .product-minus { bottom:12px; width:38px; height:38px; min-width:38px; border-radius:11px; }
+  .product-grid.tiles .product-add > b { right:12px; }
+  .product-grid.tiles .product-minus { left:12px; }
+}
+
 .auth-shell { min-height:100vh; background:linear-gradient(140deg,var(--ink) 0 47%,color-mix(in srgb,var(--ink),#fff 10%) 47% 100%); display:grid; place-items:center; padding:20px; }
 .auth-card { width:min(440px,100%); background:var(--card); border-radius:26px; padding:36px; box-shadow:0 30px 90px #0005; }
 .auth-card .brand-mark { margin-bottom:22px; }
