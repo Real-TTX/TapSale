@@ -37,7 +37,7 @@
 
   let listId = Number(app.dataset.activeList || 0);
   let cart = {}, given = 0, inputDigits = '', activeCategory = 'all';
-  const restaurantMedia = matchMedia('(min-width: 1100px) and (orientation: landscape)');
+  const restaurantMedia = matchMedia('(min-width: 900px) and (orientation: landscape)');
   let restaurantPreference = localStorage.getItem('tabsaleRestaurantMode');
   const cartKey = () => `tabsale-cart-${userId}-${listId}`;
   const categoryKey = () => `tabsale-category-${userId}-${listId}`;

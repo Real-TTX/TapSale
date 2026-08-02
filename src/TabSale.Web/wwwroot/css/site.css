@@ -208,14 +208,26 @@ button { cursor:pointer; }
 .btn-large { min-height:52px; }
 .btn-complete { width:100%; font-size:18px; margin-top:16px; min-height:56px; }
 
-@media (min-width:1100px) and (orientation:landscape) {
+@media (min-width:900px) and (orientation:landscape) {
   .restaurant-toggle { display:flex; }
-  .restaurant-layout .sale-workspace { display:grid; grid-template-columns:minmax(0,7fr) minmax(320px,3fr); align-items:start; gap:20px; }
+  .content:has(.restaurant-layout) { height:100dvh; overflow:hidden; padding-bottom:22px; }
+  .restaurant-layout { display:flex; flex-direction:column; height:100%; min-height:0; }
+  .restaurant-layout .sale-head { flex:0 0 auto; }
+  .restaurant-layout .sale-workspace { display:grid; grid-template-columns:minmax(0,7fr) minmax(320px,3fr); align-items:stretch; flex:1 1 auto; min-height:0; gap:20px; overflow:hidden; }
   .restaurant-layout .total-display { display:none; }
-  .restaurant-layout .order-panel { position:sticky; top:18px; display:flex; flex-direction:column; min-height:520px; height:calc(100dvh - 36px); max-height:760px; padding:20px; border:1px solid var(--line); border-radius:20px; background:var(--card); box-shadow:var(--shadow); }
+  .restaurant-layout .catalog-pane { display:flex; flex-direction:column; min-height:0; overflow:hidden; }
+  .restaurant-layout .category-filter { flex:0 0 auto; }
+  .restaurant-layout #productGrid { flex:1 1 auto; min-height:0; overflow-y:auto; overscroll-behavior:contain; align-content:start; padding:2px 6px 12px 2px; scrollbar-gutter:stable; }
+  .restaurant-layout .order-panel { position:static; display:flex; flex-direction:column; min-height:0; height:100%; max-height:none; padding:20px; border:1px solid var(--line); border-radius:20px; background:var(--card); box-shadow:var(--shadow); overflow:hidden; }
   .restaurant-layout .order-panel-head, .restaurant-layout .order-total { display:flex; }
   .restaurant-layout .order-lines { display:grid; flex:1 1 auto; }
   .restaurant-layout .pay-bar, .sidebar-collapsed .restaurant-layout .pay-bar { position:static; left:auto; bottom:auto; transform:none; width:100%; margin-top:14px; border-radius:15px; padding:14px 17px; }
+}
+
+@media (min-width:900px) and (max-width:1099px) and (orientation:landscape) {
+  .view-switch span, .restaurant-toggle span { display:none; }
+  .restaurant-layout .sale-workspace { grid-template-columns:minmax(0,1fr) 290px; gap:14px; }
+  .restaurant-layout .order-panel { padding:14px; }
 }
 
 @media (min-width:761px) and (max-width:1366px) {
