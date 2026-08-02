@@ -2,5 +2,5 @@
 @{ var theme = ThemeStore.Current; var themeStyle = theme.Theme == "custom" ? $"--ink:{theme.Ink};--brand:{theme.Brand};--lime:{theme.Lime};--paper:{theme.Paper};--danger:{theme.Danger}" : ""; }
 <!DOCTYPE html><html lang="@System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName" data-theme="@theme.Theme" style="@themeStyle"><head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-<title>@ViewData["Title"] · TabSale</title><link rel="icon" type="image/svg+xml" href="~/icons/app-icon.svg"/><link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+<title>@ViewData["Title"] · TabSale</title><link rel="icon" href="~/favicon.ico" sizes="16x16 32x32 48x48"/><link rel="icon" type="image/svg+xml" href="~/icons/app-icon.svg"/><link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
 </head><body class="auth-shell"><main>@RenderBody()</main><partial name="_ValidationScriptsPartial"/></body></html>
