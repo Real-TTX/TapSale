@@ -1,4 +1,12 @@
 (() => {
+  const setTheme = theme => {
+    const value = ['classic', 'winter', 'market', 'contrast'].includes(theme) ? theme : 'classic';
+    document.documentElement.dataset.theme = value;
+    localStorage.tabsaleTheme = value;
+    document.querySelectorAll('.theme-picker').forEach(picker => picker.value = value);
+  };
+  setTheme(localStorage.tabsaleTheme || 'classic');
+  document.querySelectorAll('.theme-picker').forEach(picker => picker.addEventListener('change', () => setTheme(picker.value)));
   const sidebar = document.getElementById('sidebar');
   document.getElementById('menuToggle')?.addEventListener('click', () => sidebar?.classList.toggle('open'));
   const collapseButton = document.getElementById('sidebarCollapse');
