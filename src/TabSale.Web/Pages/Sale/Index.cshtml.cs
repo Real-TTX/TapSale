@@ -22,8 +22,19 @@ public sealed class IndexModel(AppDbContext db, CurrentUser current) : PageModel
         var catalog = await query.Select(x => new
         {
             id = x.Id, name = x.Name,
-            products = x.Products.Where(p => p.IsActive).OrderBy(p => p.SortOrder).ThenBy(p => p.Name)
-                .Select(p => new { id = p.Id, p.Name, priceCents = p.UnitPriceCents, kind = p.Kind.ToString(), p.Color, p.Icon, p.Version })
+            products = x.Products.Where(p => p.IsActive)
+                .OrderBy(p => p.ProductCategory == null ? int.MaxValue : p.ProductCategory.SortOrder).ThenBy(p => p.SortOrder).ThenBy(p => p.Name)
+                .Select(p => new
+                {
+                    id = p.Id, p.Name, priceCents = p.UnitPriceCents, kind = p.Kind.ToString(), p.Color, p.Icon,
+                    imageUrl = p.ImagePath == null ? null : "/uploads/" + p.ImagePath,
+                    categoryId = p.ProductCategory != null && p.ProductCategory.IsActive ? p.ProductCategoryId : null,
+                    categoryName = p.ProductCategory != null && p.ProductCategory.IsActive ? p.ProductCategory.Name : null,
+                    categoryIcon = p.ProductCategory != null && p.ProductCategory.IsActive ? p.ProductCategory.Icon : null,
+                    categoryColor = p.ProductCategory != null && p.ProductCategory.IsActive ? p.ProductCategory.Color : null,
+                    categorySortOrder = p.ProductCategory != null && p.ProductCategory.IsActive ? p.ProductCategory.SortOrder : int.MaxValue,
+                    p.Version
+                })
         }).ToListAsync();
         CatalogJson = JsonSerializer.Serialize(catalog, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
     }

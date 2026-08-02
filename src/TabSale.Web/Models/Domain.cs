@@ -42,6 +42,7 @@ public sealed class SaleList : AuditEntity
     [MaxLength(120)] public required string Name { get; set; }
     public bool IsActive { get; set; } = true;
     public List<Product> Products { get; set; } = [];
+    public List<ProductCategory> Categories { get; set; } = [];
     public List<UserSaleList> Users { get; set; } = [];
 }
 
@@ -60,12 +61,27 @@ public sealed class Product : AuditEntity
     [MaxLength(120)] public required string Name { get; set; }
     public long UnitPriceCents { get; set; }
     public ProductKind Kind { get; set; }
+    public long? ProductCategoryId { get; set; }
+    public ProductCategory? ProductCategory { get; set; }
     [MaxLength(16)] public string Color { get; set; } = "#167D6D";
     [MaxLength(40)] public string Icon { get; set; } = "tag";
+    [MaxLength(200)] public string? ImagePath { get; set; }
     public int SortOrder { get; set; }
     public bool IsActive { get; set; } = true;
     public int Version { get; set; } = 1;
     public List<ProductPriceVersion> Versions { get; set; } = [];
+}
+
+public sealed class ProductCategory : AuditEntity
+{
+    public long SaleListId { get; set; }
+    public SaleList SaleList { get; set; } = null!;
+    [MaxLength(80)] public required string Name { get; set; }
+    [MaxLength(16)] public string Color { get; set; } = "#167D6D";
+    [MaxLength(40)] public string Icon { get; set; } = "tag";
+    public int SortOrder { get; set; }
+    public bool IsActive { get; set; } = true;
+    public List<Product> Products { get; set; } = [];
 }
 
 public sealed class ProductPriceVersion : AuditEntity

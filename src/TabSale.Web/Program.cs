@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using TabSale.Web.Data;
 using TabSale.Web.Models;
 using TabSale.Web.Services;
@@ -15,6 +16,8 @@ var dataPath = builder.Configuration["DataPath"] ?? Path.Combine(builder.Environ
 Directory.CreateDirectory(dataPath);
 var keysPath = Path.Combine(dataPath, "keys");
 Directory.CreateDirectory(keysPath);
+var uploadsPath = Path.Combine(dataPath, "uploads");
+Directory.CreateDirectory(uploadsPath);
 builder.Services.AddDataProtection().SetApplicationName("TabSale").PersistKeysToFileSystem(new DirectoryInfo(keysPath));
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite($"Data Source={Path.Combine(dataPath, "tabsale.db")}"));
 builder.Services.AddRazorPages(options =>
@@ -57,6 +60,7 @@ builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<CurrentUser>();
 builder.Services.AddSingleton<AppText>();
 builder.Services.AddSingleton(new ThemeConfigStore(Path.Combine(dataPath, "theme.json")));
+builder.Services.AddSingleton(new ProductImageStorage(uploadsPath));
 builder.Services.AddAntiforgery(options => options.HeaderName = "X-CSRF-TOKEN");
 
 var app = builder.Build();
@@ -79,6 +83,16 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseRouting();
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(uploadsPath),
+    RequestPath = "/uploads",
+    OnPrepareResponse = context =>
+    {
+        context.Context.Response.Headers.CacheControl = "public,max-age=31536000,immutable";
+        context.Context.Response.Headers.XContentTypeOptions = "nosniff";
+    }
+});
 app.UseAuthentication();
 app.UseAuthorization();
 

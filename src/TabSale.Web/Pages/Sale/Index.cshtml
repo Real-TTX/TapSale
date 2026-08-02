@@ -4,7 +4,7 @@
 @inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
 @{ ViewData["Title"] = T["Sell"]; var token = Antiforgery.GetAndStoreTokens(HttpContext).RequestToken; }
 <meta name="csrf-token" content="@token" />
-<div id="saleApp" data-active-list="@Model.ActiveListId" data-user-id="@Model.UserId" data-ready="@T["Ready"]" data-pending="@T["Pending"]" data-synced="@T["Synced"]">
+<div id="saleApp" data-active-list="@Model.ActiveListId" data-user-id="@Model.UserId" data-ready="@T["Ready"]" data-pending="@T["Pending"]" data-synced="@T["Synced"]" data-all-categories="@T["AllCategories"]" data-other-category="@T["OtherCategory"]">
     <div class="sale-head">
         <div><p class="eyebrow"><a asp-page="Shift" asp-route-saleListId="@Model.ActiveListId">◴ @T["CashShift"]</a></p><select id="saleListSelect" class="list-switch" aria-label="@T["SaleLists"]">
         @foreach (var list in Model.Lists) { <option value="@list.Id" selected="@(list.Id == Model.ActiveListId)">@list.Name</option> }
@@ -12,6 +12,7 @@
         <div class="view-switch" role="group"><button type="button" data-view="tiles" class="active">▦ <span>@T["TileMode"]</span></button><button type="button" data-view="list">☷ <span>@T["ListMode"]</span></button></div>
     </div>
     <section class="total-display"><span>@T["Total"]</span><strong id="topTotal">€0.00</strong><small id="syncState">● <span>@T["Ready"]</span></small></section>
+    <nav id="categoryFilter" class="category-filter" aria-label="@T["Categories"]" hidden></nav>
     @if (Model.Lists.Count == 0) { <div class="empty-state"><strong>@T["NoList"]</strong><p>@T["NoListHelp"]</p></div> }
     <div id="productGrid" class="product-grid tiles"></div>
     <button type="button" id="payBar" class="pay-bar" disabled><span><small>@T["Pay"]</small><strong id="bottomTotal">€0.00</strong></span><b>→</b></button>

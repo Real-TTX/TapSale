@@ -41,7 +41,18 @@ public sealed class AppText
         ["PrimaryColor"] = ("Primär", "Primary"), ["AccentColor"] = ("Akzent", "Accent"), ["BackgroundColor"] = ("Hintergrund", "Background"),
         ["DangerColor"] = ("Warnung", "Danger"), ["ResetColors"] = ("Farben zurücksetzen", "Reset colors"),
         ["Appearance"] = ("Darstellung", "Appearance"), ["AppearanceSaved"] = ("Darstellung wurde für alle Benutzer gespeichert.", "Appearance was saved for all users."),
-        ["CustomColorsHelp"] = ("Die Farben werden verwendet, wenn „Eigenes CI“ gewählt ist.", "The colors are used when “Custom brand” is selected.")
+        ["CustomColorsHelp"] = ("Die Farben werden verwendet, wenn „Eigenes CI“ gewählt ist.", "The colors are used when “Custom brand” is selected."),
+        ["Categories"] = ("Kategorien", "Categories"), ["Category"] = ("Kategorie", "Category"), ["NewCategory"] = ("Neue Kategorie", "New category"),
+        ["NoCategory"] = ("Ohne Kategorie", "No category"), ["AllCategories"] = ("Alle", "All"), ["OtherCategory"] = ("Sonstiges", "Other"),
+        ["ProductImage"] = ("Produktbild", "Product image"), ["RemoveImage"] = ("Vorhandenes Bild entfernen", "Remove current image"),
+        ["ImageHelp"] = ("PNG, JPG, GIF oder WebP, maximal 5 MB. Ohne Bild wird das gewählte Icon angezeigt.", "PNG, JPG, GIF or WebP, maximum 5 MB. The selected icon is shown when no image is stored."),
+        ["FallbackIcon"] = ("Icon ohne Bild", "Icon without image"), ["Icon"] = ("Icon", "Icon"), ["Color"] = ("Farbe", "Color"), ["SortOrder"] = ("Sortierung", "Sort order"),
+        ["InvalidImage"] = ("Bitte ein gültiges Bild bis maximal 5 MB auswählen.", "Choose a valid image up to 5 MB."),
+        ["InvalidIcon"] = ("Bitte ein verfügbares Icon auswählen.", "Choose an available icon."), ["InvalidCategory"] = ("Die gewählte Kategorie gehört nicht zu dieser Verkaufsliste.", "The selected category does not belong to this sale list."),
+        ["CategoryExists"] = ("Eine Kategorie mit diesem Namen existiert bereits.", "A category with this name already exists."),
+        ["IconTag"] = ("Allgemein", "General"), ["IconDrink"] = ("Getränk", "Drink"), ["IconBeer"] = ("Bier", "Beer"), ["IconFood"] = ("Essen", "Food"),
+        ["IconSausage"] = ("Wurst", "Sausage"), ["IconDessert"] = ("Nachtisch", "Dessert"), ["IconCoffee"] = ("Kaffee", "Coffee"), ["IconWine"] = ("Wein", "Wine"),
+        ["IconSnack"] = ("Snack", "Snack"), ["IconIceCream"] = ("Eis", "Ice cream"), ["IconTicket"] = ("Ticket", "Ticket"), ["IconDeposit"] = ("Pfand", "Deposit")
     };
 
     public string this[string key] => Values.TryGetValue(key, out var value)

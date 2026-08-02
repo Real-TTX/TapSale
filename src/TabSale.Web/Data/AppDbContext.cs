@@ -10,6 +10,7 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbCon
     public DbSet<SaleList> SaleList => Set<SaleList>();
     public DbSet<UserSaleList> UserSaleList => Set<UserSaleList>();
     public DbSet<Product> Product => Set<Product>();
+    public DbSet<ProductCategory> ProductCategory => Set<ProductCategory>();
     public DbSet<ProductPriceVersion> ProductPriceVersion => Set<ProductPriceVersion>();
     public DbSet<Sale> Sale => Set<Sale>();
     public DbSet<SaleLine> SaleLine => Set<SaleLine>();
@@ -26,6 +27,8 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbCon
         modelBuilder.Entity<CashShift>().HasIndex(x => x.Token).IsUnique();
         modelBuilder.Entity<UserSaleList>().HasIndex(x => new { x.UserId, x.SaleListId }).IsUnique();
         modelBuilder.Entity<ProductPriceVersion>().HasIndex(x => new { x.ProductId, x.Version }).IsUnique();
+        modelBuilder.Entity<ProductCategory>().HasIndex(x => new { x.SaleListId, x.Name }).IsUnique();
+        modelBuilder.Entity<Product>().HasOne(x => x.ProductCategory).WithMany(x => x.Products).HasForeignKey(x => x.ProductCategoryId).OnDelete(DeleteBehavior.SetNull);
         modelBuilder.Entity<Sale>().HasOne(x => x.OriginalSale).WithMany().HasForeignKey(x => x.OriginalSaleId).OnDelete(DeleteBehavior.Restrict);
         modelBuilder.Entity<Sale>().HasOne(x => x.User).WithMany().OnDelete(DeleteBehavior.Restrict);
         modelBuilder.Entity<Sale>().HasOne(x => x.SaleList).WithMany().OnDelete(DeleteBehavior.Restrict);

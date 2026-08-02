@@ -15,7 +15,7 @@ public sealed class EditModel(AppDbContext db, CurrentUser current) : PageModel
     public async Task<IActionResult> OnGetAsync(long? id)
     {
         if (id is null) { if (!current.IsAdmin) return Forbid(); return Page(); }
-        var entity = await Allowed().Include(x => x.Products).SingleOrDefaultAsync(x => x.Id == id);
+        var entity = await Allowed().Include(x => x.Products).ThenInclude(x => x.ProductCategory).SingleOrDefaultAsync(x => x.Id == id);
         if (entity is null) return NotFound();
         Input = new() { Id = entity.Id, Name = entity.Name, IsActive = entity.IsActive }; Products = entity.Products.OrderBy(x => x.SortOrder).ToList();
         CanDelete = current.IsAdmin && !await db.Sale.AnyAsync(x => x.SaleListId == id) && entity.Products.Count == 0; return Page();
