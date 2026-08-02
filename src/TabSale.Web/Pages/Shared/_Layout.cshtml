@@ -1,0 +1,15 @@
+@inject TabSale.Web.Services.AppText T
+@inject TabSale.Web.Services.CurrentUser Current
+<!DOCTYPE html><html lang="@System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/><meta name="theme-color" content="#102A2A"/><meta name="apple-mobile-web-app-capable" content="yes"/>
+<title>@ViewData["Title"] · TabSale</title><link rel="manifest" href="~/manifest.webmanifest"/><link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+</head><body><div class="app-shell">
+<aside class="sidebar" id="sidebar"><a class="logo" asp-page="/Sale/Index"><span>TS</span><strong>TabSale</strong></a>
+<nav><a asp-page="/Sale/Index">▦ <span>@T["Sell"]</span></a><a asp-page="/History/Index">◷ <span>@T["History"]</span></a>
+@if (Current.IsManager) { <a asp-page="/Admin/SaleLists/Index">▤ <span>@T["SaleLists"]</span></a> }
+@if (Current.IsAdmin) { <a asp-page="/Admin/Users/Index">♙ <span>@T["Users"]</span></a> }
+</nav><div class="sidebar-bottom"><form method="post" asp-page="/Account/Language" class="language-switch"><input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString"/><button name="language" value="de">DE</button><button name="language" value="en">EN</button></form><div class="user-chip"><span class="avatar">@Current.Name.FirstOrDefault()</span><span><strong>@Current.Name</strong><small>@Current.Role</small></span></div>
+<form method="post" asp-page="/Account/Logout"><button class="nav-button" type="submit">↪ @T["Logout"]</button></form></div></aside>
+<section class="main"><header class="mobile-header"><button type="button" id="menuToggle" aria-label="Menu">☰</button><strong>TabSale</strong><span id="networkDot" class="network-dot"></span></header>
+<main class="content">@RenderBody()</main></section></div>
+<script src="~/js/site.js" asp-append-version="true"></script>@await RenderSectionAsync("Scripts", required: false)</body></html>

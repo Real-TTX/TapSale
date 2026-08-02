@@ -1,0 +1,7 @@
+<Project>
+  <PropertyGroup>
+    <BuildDate>$([System.DateTime]::UtcNow.ToString('yyyyMMdd'))</BuildDate>
+    <BuildNumber Condition="'$(BuildNumber)' == ''">1</BuildNumber>
+    <AssemblyInformationalVersion Condition="'$(AssemblyInformationalVersion)' == ''">local-$(BuildDate)</AssemblyInformationalVersion>
+  </PropertyGroup>
+</Project>

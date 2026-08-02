@@ -1,0 +1,13 @@
+@page
+@model LoginModel
+@inject TabSale.Web.Services.AppText T
+@{ ViewData["Title"] = T["Login"]; Layout = "_AuthLayout"; }
+<div class="auth-card">
+    <div class="brand-mark">TS</div><p class="eyebrow">TABSALE</p><h1>@T["Login"]</h1><p class="muted">@T["LoginHelp"]</p>
+    <form method="post" class="stack-form">
+        <div asp-validation-summary="ModelOnly" class="validation"></div>
+        <label asp-for="Input.UserName">@T["UserName"]</label><input asp-for="Input.UserName" autocomplete="username" autofocus />
+        <label asp-for="Input.Password">@T["Password"]</label><input asp-for="Input.Password" autocomplete="current-password" />
+        <button class="btn btn-primary btn-large" type="submit">@T["Login"]</button>
+    </form>
+</div>

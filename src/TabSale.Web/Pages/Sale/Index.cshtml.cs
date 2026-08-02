@@ -1,0 +1,31 @@
+using System.Text.Json;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using TabSale.Web.Data;
+using TabSale.Web.Models;
+using TabSale.Web.Services;
+
+namespace TabSale.Web.Pages.Sale;
+public sealed class IndexModel(AppDbContext db, CurrentUser current) : PageModel
+{
+    public List<SaleListOption> Lists { get; private set; } = [];
+    public long? ActiveListId { get; private set; }
+    public string CatalogJson { get; private set; } = "[]";
+    public long UserId => current.Id;
+
+    public async Task OnGetAsync(long? listId)
+    {
+        var query = db.SaleList.AsNoTracking().Where(x => x.IsActive);
+        if (!current.IsAdmin) query = query.Where(x => x.Users.Any(a => a.UserId == current.Id));
+        Lists = await query.OrderBy(x => x.Name).Select(x => new SaleListOption(x.Id, x.Name)).ToListAsync();
+        ActiveListId = Lists.Any(x => x.Id == listId) ? listId : Lists.FirstOrDefault()?.Id;
+        var catalog = await query.Select(x => new
+        {
+            id = x.Id, name = x.Name,
+            products = x.Products.Where(p => p.IsActive).OrderBy(p => p.SortOrder).ThenBy(p => p.Name)
+                .Select(p => new { id = p.Id, p.Name, priceCents = p.UnitPriceCents, kind = p.Kind.ToString(), p.Color, p.Icon, p.Version })
+        }).ToListAsync();
+        CatalogJson = JsonSerializer.Serialize(catalog, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+    }
+    public sealed record SaleListOption(long Id, string Name);
+}

@@ -1,0 +1,29 @@
+@page
+@model TabSale.Web.Pages.Sale.IndexModel
+@inject TabSale.Web.Services.AppText T
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+@{ ViewData["Title"] = T["Sell"]; var token = Antiforgery.GetAndStoreTokens(HttpContext).RequestToken; }
+<meta name="csrf-token" content="@token" />
+<div id="saleApp" data-active-list="@Model.ActiveListId" data-user-id="@Model.UserId" data-ready="@T["Ready"]" data-pending="@T["Pending"]" data-synced="@T["Synced"]">
+    <div class="sale-head">
+        <div><p class="eyebrow"><a asp-page="Shift" asp-route-saleListId="@Model.ActiveListId">◴ @T["CashShift"]</a></p><select id="saleListSelect" class="list-switch" aria-label="@T["SaleLists"]">
+        @foreach (var list in Model.Lists) { <option value="@list.Id" selected="@(list.Id == Model.ActiveListId)">@list.Name</option> }
+        </select></div>
+        <div class="view-switch" role="group"><button type="button" data-view="tiles" class="active">▦ <span>@T["TileMode"]</span></button><button type="button" data-view="list">☷ <span>@T["ListMode"]</span></button></div>
+    </div>
+    <section class="total-display"><span>@T["Total"]</span><strong id="topTotal">€0.00</strong><small id="syncState">● <span>@T["Ready"]</span></small></section>
+    @if (Model.Lists.Count == 0) { <div class="empty-state"><strong>@T["NoList"]</strong><p>@T["NoListHelp"]</p></div> }
+    <div id="productGrid" class="product-grid tiles"></div>
+    <button type="button" id="payBar" class="pay-bar" disabled><span><small>@T["Pay"]</small><strong id="bottomTotal">€0.00</strong></span><b>→</b></button>
+</div>
+<dialog id="paymentDialog" class="payment-dialog">
+ <form method="dialog"><button class="dialog-close" value="cancel" aria-label="@T["Close"]">×</button></form>
+ <div id="paymentNormal"><p class="eyebrow">@T["Cash"]</p><h2 id="dueTotal">€0.00</h2><p class="given-label">@T["Given"]</p><div id="givenDisplay" class="given-display">€0.00</div>
+ <div class="quick-cash"><button data-cash="500">€5</button><button data-cash="1000">€10</button><button data-cash="2000">€20</button><button data-cash="5000">€50</button></div>
+ <div class="keypad">@foreach (var key in new[]{"1","2","3","4","5","6","7","8","9","C","0","⌫"}) { <button type="button" data-key="@key">@key</button> }</div>
+ <div class="change-box"><span>@T["Change"]</span><strong id="changeTotal">€0.00</strong></div></div>
+ <div id="paymentPayout" hidden><p class="eyebrow">@T["Payout"]</p><h2 id="payoutTotal">€0.00</h2><p>@T["ConfirmPayout"]</p></div>
+ <button type="button" id="completeSale" class="btn btn-primary btn-complete" disabled>@T["Complete"]</button>
+</dialog>
+<script id="catalogData" type="application/json">@Html.Raw(Model.CatalogJson)</script>
+@section Scripts { <script src="~/js/sale.js" asp-append-version="true"></script> }

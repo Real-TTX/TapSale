@@ -1,0 +1,10 @@
+{
+  "name": "TabSale",
+  "short_name": "TabSale",
+  "description": "Fast offline point of sale for clubs and events.",
+  "start_url": "/Sale",
+  "display": "standalone",
+  "background_color": "#F4F6F1",
+  "theme_color": "#102A2A",
+  "icons": [{ "src": "/icons/app-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}
