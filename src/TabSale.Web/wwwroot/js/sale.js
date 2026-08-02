@@ -22,7 +22,7 @@
     const mode = localStorage.tabsaleView || 'tiles'; grid.className = `product-grid ${mode}`; grid.innerHTML = '';
     for (const p of currentList().products) {
       const count = cart[p.id] || 0, el = document.createElement('article'); el.className = `product-card ${p.kind === 'DepositReturn' ? 'return' : ''} ${count > 0 ? 'has-count' : ''}`;
-      el.style.setProperty('--product-color', p.color); el.innerHTML = `<button class="product-add" type="button" aria-label="Add"><span class="product-icon">${p.kind === 'DepositReturn' ? '↙' : p.kind === 'DepositCharge' ? '↗' : '●'}</span><span class="product-copy"><strong></strong><small>${euro.format(signedPrice(p)/100)}</small><em class="product-count">${count > 0 ? `${count}×` : ''}</em></span><b aria-hidden="true">+</b></button><button class="product-minus" type="button" aria-label="Remove">−</button>`;
+      el.style.setProperty('--product-color', p.color); el.innerHTML = `<button class="product-add" type="button" aria-label="Add"><span class="product-icon">${p.kind === 'DepositReturn' ? '↙' : p.kind === 'DepositCharge' ? '↗' : '●'}</span><span class="product-copy"><strong></strong><small>${euro.format(signedPrice(p)/100)}</small><em class="product-count">${count}×</em></span><b aria-hidden="true">+</b></button><button class="product-minus" type="button" aria-label="Remove" ${count === 0 ? 'disabled' : ''}>−</button>`;
       el.querySelector('strong').textContent = p.name;
       el.querySelector('.product-add').onclick = () => { cart[p.id] = count + 1; storeCart(); render(); };
       el.querySelector('.product-minus').onclick = event => { event.stopPropagation(); if (count <= 1) delete cart[p.id]; else cart[p.id] = count - 1; storeCart(); render(); };
