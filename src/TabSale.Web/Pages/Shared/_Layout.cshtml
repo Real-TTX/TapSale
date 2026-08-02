@@ -13,6 +13,7 @@
 @if (Current.IsAdmin) { <a asp-page="/Admin/Appearance/Index">◉ <span>@T["Appearance"]</span></a> }
 </nav><div class="sidebar-bottom"><form method="post" asp-page="/Account/Language" class="language-switch"><input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString"/><button name="language" value="de">DE</button><button name="language" value="en">EN</button></form><div class="user-chip"><span class="avatar">@Current.Name.FirstOrDefault()</span><span><strong>@Current.Name</strong><small>@Current.Role</small></span></div>
 <form method="post" asp-page="/Account/Logout"><button class="nav-button" type="submit">↪ @T["Logout"]</button></form></div></aside>
+<button type="button" id="sidebarBackdrop" class="sidebar-backdrop" aria-label="Menü schließen" tabindex="-1"></button>
 <section class="main"><header class="mobile-header"><button type="button" id="menuToggle" aria-label="Menu">☰</button><strong>TabSale</strong><span id="networkDot" class="network-dot"></span></header>
 <main class="content">@RenderBody()</main></section></div>
 <script src="~/js/site.js" asp-append-version="true"></script>@await RenderSectionAsync("Scripts", required: false)</body></html>

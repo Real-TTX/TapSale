@@ -16,23 +16,24 @@
 [data-theme="contrast"] { --ink:#000; --muted:#333; --paper:#fff; --card:#fff; --line:#000; --brand:#0057d9; --lime:#ffe600; --danger:#b00020; --shadow:0 0 0 2px #000; }
 
 * { box-sizing: border-box; }
-html { font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; color:var(--ink); background:var(--paper); }
-body { margin:0; background:var(--paper); }
+html { min-height:100%; font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; color:var(--ink); background:var(--paper); }
+body { min-height:100vh; min-height:100dvh; margin:0; background:var(--paper); }
 button, input, select { font:inherit; color:inherit; }
 button { cursor:pointer; }
 
-.app-shell { min-height:100vh; display:grid; grid-template-columns:var(--sidebar-width) 1fr; transition:grid-template-columns .2s ease; }
-.sidebar { position:sticky; top:0; height:100vh; background:var(--ink); color:#fff; padding:24px 16px; display:flex; flex-direction:column; z-index:20; }
+.app-shell { min-height:100vh; min-height:100dvh; display:grid; grid-template-columns:var(--sidebar-width) minmax(0,1fr); transition:grid-template-columns .2s ease; }
+.sidebar { position:fixed; inset:0 auto 0 0; width:var(--sidebar-width); height:100vh; height:100dvh; overflow:hidden; background:var(--ink); color:#fff; padding:24px 16px max(24px,env(safe-area-inset-bottom)); display:flex; flex-direction:column; transition:width .2s ease; z-index:20; }
 .sidebar-head { display:flex; align-items:flex-start; gap:4px; }
 .sidebar-head .logo { flex:1; min-width:0; }
 .logo { display:flex; align-items:center; gap:12px; color:#fff; text-decoration:none; font-size:20px; padding:0 8px 28px; }
 .logo span, .brand-mark { display:grid; place-items:center; width:42px; height:42px; border-radius:14px; background:var(--lime); color:var(--ink); font-weight:900; }
 .sidebar-collapse { display:grid; place-items:center; flex:0 0 30px; width:30px; height:30px; border:1px solid rgba(255,255,255,.22); border-radius:9px; background:rgba(255,255,255,.07); color:#fff; font-size:23px; line-height:1; }
 .sidebar-collapse:hover { background:rgba(255,255,255,.15); }
-.sidebar nav { display:grid; gap:7px; }
+.sidebar nav { display:grid; align-content:start; gap:7px; flex:1 1 auto; min-height:0; overflow-y:auto; overscroll-behavior:contain; scrollbar-gutter:stable; }
 .sidebar nav a, .nav-button { border:0; background:none; color:#c8d5d1; text-decoration:none; padding:13px 14px; border-radius:12px; text-align:left; font-weight:650; }
 .sidebar nav a:hover, .sidebar nav a:focus, .nav-button:hover { background:rgba(255,255,255,.08); color:#fff; }
-.sidebar-bottom { margin-top:auto; }
+.sidebar-bottom { flex:0 0 auto; margin-top:16px; }
+.sidebar-backdrop { display:none; }
 .user-chip { display:flex; align-items:center; gap:10px; padding:14px 8px; border-top:1px solid rgba(255,255,255,.15); }
 .user-chip .avatar { display:grid; place-items:center; width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,.14); text-transform:uppercase; }
 .user-chip strong, .user-chip small { display:block; }
@@ -52,7 +53,7 @@ button { cursor:pointer; }
 .sidebar-collapsed .nav-button::first-letter { font-size:20px; }
 .sidebar-collapsed .sidebar-collapse { margin:0 auto 16px; }
 
-.main { min-width:0; }
+.main { min-width:0; grid-column:2; }
 .content { padding:34px clamp(20px,4vw,58px) 120px; max-width:1480px; margin:auto; }
 .mobile-header { display:none; }
 .eyebrow { text-transform:uppercase; letter-spacing:.16em; font-size:12px; font-weight:850; color:var(--brand); margin:0 0 8px; }
@@ -180,8 +181,11 @@ td.right, th.right { text-align:right; }
 
 @media (max-width:760px) {
   .app-shell { display:block; }
-  .sidebar, .sidebar-collapsed .sidebar { position:fixed; left:-260px; width:240px; padding:24px 16px; transition:left .2s; }
+  .sidebar, .sidebar-collapsed .sidebar { left:-260px; width:240px; padding:24px 16px max(24px,env(safe-area-inset-bottom)); transition:left .2s; }
   .sidebar.open { left:0; }
+  .sidebar-backdrop { position:fixed; inset:0; z-index:19; width:100%; height:100%; border:0; background:rgba(7,21,21,.58); opacity:0; pointer-events:none; transition:opacity .2s; }
+  .sidebar-backdrop.open { display:block; opacity:1; pointer-events:auto; }
+  body.mobile-menu-open { overflow:hidden; }
   .sidebar-collapse { display:none; }
   .sidebar-collapsed .sidebar-head { display:flex; }
   .sidebar-collapsed .logo { padding:0 8px 28px; }
