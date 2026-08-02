@@ -3,7 +3,10 @@
   if (!app) return;
 
   const catalog = JSON.parse(document.getElementById('catalogData').textContent || '[]');
-  const select = document.getElementById('saleListSelect');
+  const listDialog = document.getElementById('saleListDialog');
+  const listOpen = document.getElementById('saleListOpen');
+  const listName = document.getElementById('saleListName');
+  const cashShiftLink = document.getElementById('cashShiftLink');
   const grid = document.getElementById('productGrid');
   const categoryFilter = document.getElementById('categoryFilter');
   const payBar = document.getElementById('payBar');
@@ -31,7 +34,7 @@
     coffee:'☕', wine:'🍷', snack:'🥨', icecream:'🍦', ticket:'🎟️', deposit:'↩️'
   };
 
-  let listId = Number(select?.value || app.dataset.activeList || 0);
+  let listId = Number(app.dataset.activeList || 0);
   let cart = {}, given = 0, inputDigits = '', activeCategory = 'all';
   const restaurantMedia = matchMedia('(min-width: 1100px) and (orientation: landscape)');
   let restaurantPreference = localStorage.getItem('tabsaleRestaurantMode');
@@ -190,7 +193,19 @@
   });
   restaurantMedia.addEventListener('change', () => { if (restaurantPreference === null) applyRestaurantMode(); });
   document.querySelector(`[data-view="${localStorage.tabsaleView || 'tiles'}"]`)?.click();
-  select?.addEventListener('change', () => { listId = Number(select.value); loadCart(); loadCategory(); render(); });
+  listOpen?.addEventListener('click', () => listDialog?.showModal());
+  document.querySelectorAll('[data-list-id]').forEach(button => button.addEventListener('click', () => {
+    listId = Number(button.dataset.listId);
+    listName.textContent = currentList().name;
+    cashShiftLink.href = `/Sale/Shift?saleListId=${listId}`;
+    document.querySelectorAll('[data-list-id]').forEach(item => {
+      const active = item === button;
+      item.classList.toggle('active', active);
+      item.setAttribute('aria-pressed', String(active));
+      item.querySelector('b').textContent = active ? '✓' : '→';
+    });
+    loadCart(); loadCategory(); render(); listDialog.close();
+  }));
   payBar.onclick = () => { given = 0; inputDigits = ''; updatePayment(); dialog.showModal(); };
   document.querySelectorAll('[data-cash]').forEach(button => button.onclick = () => { given = Number(button.dataset.cash); inputDigits = String(given); updatePayment(); });
   document.querySelectorAll('[data-key]').forEach(button => button.onclick = () => {

@@ -8,6 +8,7 @@ public sealed class AppText
     {
         ["Sell"] = ("Verkaufen", "Sell"), ["History"] = ("Historie", "History"),
         ["Users"] = ("Benutzer", "Users"), ["SaleLists"] = ("Verkaufslisten", "Sale lists"),
+        ["ChooseSaleList"] = ("Verkaufsliste auswählen", "Choose sale list"),
         ["Login"] = ("Anmelden", "Sign in"), ["Logout"] = ("Abmelden", "Sign out"),
         ["Save"] = ("Speichern", "Save"), ["Back"] = ("Zurück", "Back"),
         ["Delete"] = ("Löschen", "Delete"), ["Search"] = ("Suchen", "Search"),

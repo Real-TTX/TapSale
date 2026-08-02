@@ -2,13 +2,11 @@
 @model TabSale.Web.Pages.Sale.IndexModel
 @inject TabSale.Web.Services.AppText T
 @inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
-@{ ViewData["Title"] = T["Sell"]; var token = Antiforgery.GetAndStoreTokens(HttpContext).RequestToken; }
+@{ ViewData["Title"] = T["Sell"]; var token = Antiforgery.GetAndStoreTokens(HttpContext).RequestToken; var activeList = Model.Lists.FirstOrDefault(x => x.Id == Model.ActiveListId); }
 <meta name="csrf-token" content="@token" />
 <div id="saleApp" data-active-list="@Model.ActiveListId" data-user-id="@Model.UserId" data-ready="@T["Ready"]" data-pending="@T["Pending"]" data-synced="@T["Synced"]" data-all-categories="@T["AllCategories"]" data-other-category="@T["OtherCategory"]" data-order="@T["Order"]" data-empty-order="@T["EmptyOrder"]" data-item="@T["Item"]" data-items="@T["Items"]">
     <div class="sale-head">
-        <div><p class="eyebrow"><a asp-page="Shift" asp-route-saleListId="@Model.ActiveListId">◴ @T["CashShift"]</a></p><select id="saleListSelect" class="list-switch" aria-label="@T["SaleLists"]">
-        @foreach (var list in Model.Lists) { <option value="@list.Id" selected="@(list.Id == Model.ActiveListId)">@list.Name</option> }
-        </select></div>
+        <div><p class="eyebrow"><a id="cashShiftLink" asp-page="Shift" asp-route-saleListId="@Model.ActiveListId">◴ @T["CashShift"]</a></p><button type="button" id="saleListOpen" class="list-switch" aria-haspopup="dialog" aria-controls="saleListDialog" disabled="@(activeList is null)"><span id="saleListName">@(activeList?.Name ?? T["NoList"])</span><b aria-hidden="true">⌄</b></button></div>
         <div class="sale-controls"><div class="view-switch" role="group"><button type="button" data-view="tiles" class="active">▦ <span>@T["TileMode"]</span></button><button type="button" data-view="list">☷ <span>@T["ListMode"]</span></button></div><button type="button" id="restaurantToggle" class="restaurant-toggle" aria-pressed="false" title="@T["RestaurantModeHelp"]">▥ <span>@T["RestaurantMode"]</span></button></div>
     </div>
     <div class="sale-workspace">
@@ -26,6 +24,13 @@
         </aside>
     </div>
 </div>
+<dialog id="saleListDialog" class="sale-list-dialog" aria-labelledby="saleListDialogTitle">
+ <form method="dialog"><button class="dialog-close" value="cancel" aria-label="@T["Close"]">×</button></form>
+ <header class="list-picker-head"><p class="eyebrow">@T["SaleLists"]</p><h2 id="saleListDialogTitle">@T["ChooseSaleList"]</h2></header>
+ <div class="sale-list-options">
+ @foreach (var list in Model.Lists) { <button type="button" class="sale-list-option @(list.Id == Model.ActiveListId ? "active" : "")" data-list-id="@list.Id" aria-pressed="@(list.Id == Model.ActiveListId ? "true" : "false")"><strong>@list.Name</strong><b aria-hidden="true">@(list.Id == Model.ActiveListId ? "✓" : "→")</b></button> }
+ </div>
+</dialog>
 <dialog id="paymentDialog" class="payment-dialog">
  <form method="dialog"><button class="dialog-close" value="cancel" aria-label="@T["Close"]">×</button></form>
  <section class="payment-receipt"><div class="payment-receipt-head"><strong>@T["Order"]</strong><span id="paymentItemCount">0 @T["Items"]</span></div><div id="paymentLines" class="payment-lines"></div></section>
