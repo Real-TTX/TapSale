@@ -326,6 +326,47 @@ td.right, th.right { text-align:right; }
 .success-message { max-width:680px; margin-bottom:16px; padding:13px 16px; border-radius:12px; background:color-mix(in srgb,var(--brand),#fff 86%); color:var(--ink); font-weight:750; }
 [data-theme="contrast"] .product-card, [data-theme="contrast"] .panel, [data-theme="contrast"] .auth-card { border-width:2px; }
 
+@media (min-width:761px) and (max-width:1280px), (min-width:761px) and (max-width:1440px) and (max-height:900px) {
+  body { --sidebar-width:210px; }
+  .sidebar { width:210px; padding:18px 12px max(18px,env(safe-area-inset-bottom)); }
+  .logo { gap:10px; padding:0 6px 18px; font-size:18px; }
+  .logo-mark { flex-basis:38px; width:38px; height:38px; border-radius:12px; }
+  .sidebar nav { gap:4px; }
+  .sidebar nav a, .nav-button { padding:10px 12px; border-radius:10px; }
+  .sidebar-bottom { margin-top:10px; }
+  .user-chip { padding:10px 6px; }
+  .language-switch { padding:6px; }
+  .content { padding:18px 20px 94px; }
+  .sidebar-collapsed .content { padding-left:78px; }
+  .sale-head { gap:12px; margin-bottom:11px; }
+  .list-switch { font-size:25px; }
+  .view-switch button { padding:8px 10px; }
+  .restaurant-toggle { min-height:40px; padding:7px 10px; }
+  .total-display { margin-bottom:10px; padding:10px 16px; }
+  .total-display strong { font-size:32px; }
+  .category-filter { margin-bottom:8px; }
+  .product-grid.tiles { grid-template-columns:repeat(auto-fill,minmax(165px,1fr)); gap:9px; }
+  .product-grid.tiles .product-card, .product-grid.tiles .product-add { min-height:122px; }
+  .restaurant-layout .sale-workspace { gap:14px; }
+  .restaurant-layout .order-panel { padding:14px; border-radius:16px; }
+  .order-panel-head { padding-bottom:11px; }
+  .order-panel-head h2 { font-size:23px; }
+  .order-lines { gap:6px; padding-block:8px; }
+  .order-line { gap:8px; padding:7px; }
+  .order-total { padding-top:11px; }
+  .order-total strong { font-size:28px; }
+  .restaurant-layout .pay-bar, .sidebar-collapsed .restaurant-layout .pay-bar { margin-top:10px; padding:11px 14px; }
+  .pay-bar strong { font-size:22px; }
+  .pay-bar > b { font-size:26px; }
+  .page-title, .section-title { margin-bottom:16px; }
+  .page-title h1 { font-size:clamp(28px,4vw,38px); }
+  .panel, .empty-state { padding:22px; }
+  .toolbar { margin-bottom:14px; }
+  th, td { padding:11px 10px; }
+  .tab-bar { margin-bottom:16px; }
+  .list-actions, .button-row { margin-top:16px; }
+}
+
 @media (max-width:760px) {
   .app-shell { display:block; }
   .sidebar, .sidebar-collapsed .sidebar { left:-260px; width:240px; padding:24px 16px max(24px,env(safe-area-inset-bottom)); transform:none; transition:left .2s; }
