@@ -552,3 +552,32 @@ td.right, th.right { text-align:right; }
   .restaurant-layout .product-grid.list .product-minus { right:58px; }
   .restaurant-layout .product-grid.list .product-add > b { right:10px; }
 }
+
+/* Drill-down categories must keep their complete names readable. */
+.category-selection { grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); }
+.category-selection .category-card-copy strong {
+  overflow:visible;
+  text-overflow:clip;
+  white-space:normal;
+  overflow-wrap:anywhere;
+  hyphens:auto;
+  line-height:1.22;
+}
+
+@media (min-width:761px) and (max-width:1366px) {
+  .category-selection .category-card { min-height:112px; }
+}
+
+@media (max-width:760px) {
+  .category-selection { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .category-selection .category-card { min-height:108px; }
+}
+
+@media (max-width:479px) {
+  .category-selection { grid-template-columns:1fr; }
+}
+
+@media (min-width:900px) and (orientation:landscape) and (max-height:650px) {
+  .restaurant-layout .category-selection { grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); }
+  .restaurant-layout .category-card { min-height:104px; }
+}
