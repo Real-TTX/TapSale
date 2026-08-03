@@ -181,7 +181,9 @@ button { cursor:pointer; }
 .payment-line { padding:7px 0; border-top:1px solid var(--line); font-size:14px; }
 .payment-line span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .given-label { color:var(--muted); margin-bottom:6px; }
-.given-display { padding:9px 12px; border:1px solid var(--line); border-radius:11px; background:var(--paper); font-size:32px; font-weight:850; }
+.given-display { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:5px 7px 5px 12px; border:1px solid var(--line); border-radius:11px; background:var(--paper); font-size:32px; font-weight:850; }
+.given-clear { display:grid; place-items:center; flex:0 0 38px; width:38px; height:38px; border:0; border-radius:9px; background:color-mix(in srgb,var(--ink),transparent 91%); color:var(--ink); font-size:24px; line-height:1; }
+.given-clear:hover, .given-clear:focus-visible { background:color-mix(in srgb,var(--danger),transparent 84%); color:var(--danger); }
 .quick-cash, .keypad { display:grid; grid-template-columns:repeat(4,1fr); gap:9px; margin:16px 0; }
 .quick-cash button, .keypad button { border:1px solid var(--line); background:var(--paper); border-radius:13px; padding:15px 4px; font-size:18px; font-weight:750; }
 .keypad { grid-template-columns:repeat(3,1fr); }
@@ -505,7 +507,8 @@ td.right, th.right { text-align:right; }
   #paymentNormal > .eyebrow { margin:0; }
   #paymentNormal > h2 { margin:0 0 clamp(3px,1dvh,8px); font-size:clamp(29px,5dvh,36px); }
   #paymentNormal > .given-label { margin-bottom:3px; }
-  #paymentNormal > .given-display { padding:5px 10px; font-size:clamp(23px,4dvh,28px); }
+  #paymentNormal > .given-display { padding:4px 6px 4px 10px; font-size:clamp(23px,4dvh,28px); }
+  #paymentNormal .given-clear { flex-basis:32px; width:32px; height:32px; font-size:21px; }
   #paymentNormal > .change-box { padding:8px 12px; }
   #paymentNormal .quick-cash, #paymentNormal .keypad { gap:clamp(5px,1dvh,8px); margin:clamp(5px,1.2dvh,10px) 0; }
   #paymentNormal .quick-cash button, #paymentNormal .keypad button { min-height:clamp(32px,5.5dvh,44px); padding:5px 3px; border-radius:10px; font-size:16px; }

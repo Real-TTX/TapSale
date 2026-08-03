@@ -285,7 +285,12 @@
     loadCart(); loadCategory(); render(); listDialog.close();
   }));
   payBar.onclick = () => { given = 0; inputDigits = ''; updatePayment(); dialog.showModal(); };
-  document.querySelectorAll('[data-cash]').forEach(button => button.onclick = () => { given = Number(button.dataset.cash); inputDigits = String(given); updatePayment(); });
+  document.querySelectorAll('[data-cash]').forEach(button => button.onclick = () => {
+    given = Math.min(99999999, given + Number(button.dataset.cash));
+    inputDigits = String(given);
+    updatePayment();
+  });
+  document.getElementById('clearGiven').onclick = () => { given = 0; inputDigits = ''; updatePayment(); };
   document.querySelectorAll('[data-key]').forEach(button => button.onclick = () => {
     const key = button.dataset.key;
     if (key === 'C') inputDigits = '';

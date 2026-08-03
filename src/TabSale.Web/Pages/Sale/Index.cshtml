@@ -34,8 +34,8 @@
 <dialog id="paymentDialog" class="payment-dialog">
  <form method="dialog"><button class="dialog-close" value="cancel" aria-label="@T["Close"]">×</button></form>
  <section class="payment-receipt"><div class="payment-receipt-head"><strong>@T["Order"]</strong><span id="paymentItemCount">0 @T["Items"]</span></div><div id="paymentLines" class="payment-lines"></div></section>
- <div id="paymentNormal"><p class="eyebrow">@T["Cash"]</p><h2 id="dueTotal">€0.00</h2><p class="given-label">@T["Given"]</p><div id="givenDisplay" class="given-display">€0.00</div>
- <div class="quick-cash"><button data-cash="500">€5</button><button data-cash="1000">€10</button><button data-cash="2000">€20</button><button data-cash="5000">€50</button></div>
+ <div id="paymentNormal"><p class="eyebrow">@T["Cash"]</p><h2 id="dueTotal">€0.00</h2><p class="given-label">@T["Given"]</p><div class="given-display"><span id="givenDisplay">€0.00</span><button type="button" id="clearGiven" class="given-clear" aria-label="@T["ResetGiven"]">×</button></div>
+ <div class="quick-cash"><button type="button" data-cash="500">€5</button><button type="button" data-cash="1000">€10</button><button type="button" data-cash="2000">€20</button><button type="button" data-cash="5000">€50</button></div>
  <div class="keypad">@foreach (var key in new[]{"1","2","3","4","5","6","7","8","9","C","0","⌫"}) { <button type="button" data-key="@key">@key</button> }</div>
  <div class="change-box"><span>@T["Change"]</span><strong id="changeTotal">€0.00</strong></div></div>
  <div id="paymentPayout" hidden><p class="eyebrow">@T["Payout"]</p><h2 id="payoutTotal">€0.00</h2><p>@T["ConfirmPayout"]</p></div>
