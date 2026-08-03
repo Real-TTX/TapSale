@@ -493,27 +493,24 @@ td.right, th.right { text-align:right; }
   .icon-options { grid-template-columns:repeat(3,minmax(0,1fr)); }
 }
 
-/* Compact desktop and tablet payment layout: keep the complete keypad visible without scrolling. */
+/* Compact desktop and tablet payment layout: preserve the calculator order and use the available height. */
 @media (min-width:761px) and (max-height:900px) {
-  .payment-dialog { width:min(720px,calc(100vw - 16px)); max-height:calc(100dvh - 12px); padding:14px 16px; border-radius:20px; overflow:hidden; }
+  .payment-dialog { width:min(540px,calc(100vw - 16px)); max-height:calc(100dvh - 8px); padding:clamp(12px,2dvh,20px) 18px; border-radius:20px; overflow:hidden; }
   .payment-dialog .dialog-close { top:8px; right:10px; width:36px; height:36px; }
-  .payment-receipt { min-height:0; max-height:70px; margin-bottom:8px; padding:8px 48px 8px 10px; border-radius:11px; }
+  .payment-receipt { min-height:0; max-height:clamp(54px,12dvh,90px); margin-bottom:clamp(5px,1dvh,8px); padding:7px 48px 7px 10px; border-radius:11px; }
   .payment-receipt-head { padding-bottom:5px; }
-  .payment-lines { max-height:36px; }
+  .payment-lines { max-height:50px; }
   .payment-line { padding:5px 0; font-size:13px; }
   .payment-dialog > #paymentNormal, .payment-dialog > #paymentPayout { overflow:visible; }
-  .payment-dialog > #paymentNormal:not([hidden]) { display:grid; grid-template-columns:minmax(170px,.8fr) minmax(270px,1.2fr); grid-template-areas:"cash quick" "due quick" "given-label keypad" "given keypad" "change keypad"; grid-template-rows:auto auto auto auto 1fr; gap:4px 12px; min-height:0; overflow:visible; }
-  #paymentNormal > .eyebrow { grid-area:cash; align-self:end; margin:0; }
-  #paymentNormal > h2 { grid-area:due; margin:0 0 3px; font-size:32px; }
-  #paymentNormal > .given-label { grid-area:given-label; margin:0; }
-  #paymentNormal > .given-display { grid-area:given; padding:7px 10px; font-size:25px; }
-  #paymentNormal > .quick-cash { grid-area:quick; }
-  #paymentNormal > .keypad { grid-area:keypad; }
-  #paymentNormal > .change-box { grid-area:change; align-self:end; padding:10px 12px; }
-  #paymentNormal .quick-cash, #paymentNormal .keypad { gap:6px; margin:0; }
-  #paymentNormal .quick-cash button, #paymentNormal .keypad button { min-height:38px; padding:6px 3px; border-radius:10px; font-size:16px; }
+  #paymentNormal > .eyebrow { margin:0; }
+  #paymentNormal > h2 { margin:0 0 clamp(3px,1dvh,8px); font-size:clamp(29px,5dvh,36px); }
+  #paymentNormal > .given-label { margin-bottom:3px; }
+  #paymentNormal > .given-display { padding:5px 10px; font-size:clamp(23px,4dvh,28px); }
+  #paymentNormal > .change-box { padding:8px 12px; }
+  #paymentNormal .quick-cash, #paymentNormal .keypad { gap:clamp(5px,1dvh,8px); margin:clamp(5px,1.2dvh,10px) 0; }
+  #paymentNormal .quick-cash button, #paymentNormal .keypad button { min-height:clamp(32px,5.5dvh,44px); padding:5px 3px; border-radius:10px; font-size:16px; }
   #paymentNormal .keypad button { font-size:19px; }
-  .payment-dialog .btn-complete { min-height:44px; margin-top:8px; font-size:16px; }
+  .payment-dialog .btn-complete { min-height:clamp(40px,6dvh,48px); margin-top:clamp(5px,1dvh,8px); font-size:16px; }
 }
 
 @media (min-width:900px) and (orientation:landscape) and (max-height:650px) {
