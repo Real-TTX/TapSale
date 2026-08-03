@@ -2,7 +2,112 @@
 @model IndexModel
 @inject TabSale.Web.Services.CurrentUser Current
 @inject TabSale.Web.Services.AppText T
-@{ViewData["Title"]=T["History"];}
-<div class="page-title"><div><p class="eyebrow">@T["Reports"]</p><h1>@(Current.Role==TabSale.Web.Models.UserRole.User?T["MySales"]:T["History"])</h1></div><a class="btn btn-light" asp-page="/Sale/Shift">◴ @T["CashShift"]</a></div><div class="stat-row"><div class="stat"><small>@T["Result"]</small><strong>@((Model.RevenueCents/100m).ToString("C"))</strong></div><div class="stat"><small>@T["Transactions"]</small><strong>@Model.SaleCount</strong></div></div>
-<section class="panel"><form method="get" class="toolbar"><input type="date" name="from" value="@Request.Query["from"]"/><input type="date" name="to" value="@Request.Query["to"]"/><select name="saleListId"><option value="">@T["AllSaleLists"]</option>@foreach(var l in Model.Lists){<option value="@l.Id" selected="@(Request.Query["saleListId"]==l.Id.ToString())">@l.Name</option>}</select><input name="search" value="@Request.Query["search"]" placeholder="@T["Search"]…"/><button class="btn btn-light">@T["Filter"]</button></form><div class="table-wrap"><table><thead><tr><th>@T["Time"]</th><th>@T["Receipt"]</th><th>@T["Users"]</th><th>@T["SaleLists"]</th><th>@T["Type"]</th><th class="right">@T["Total"]</th><th></th></tr></thead><tbody>@foreach(var s in Model.Items){<tr><td>@s.SoldDate.ToLocalTime().ToString("g")</td><td><code>@s.Token.ToString()[..8]</code></td><td>@s.User.DisplayName</td><td>@s.SaleList.Name</td><td><span class="badge">@s.Kind</span></td><td class="right amount @(s.TotalCents<0?"negative":"")">@((s.TotalCents/100m).ToString("C"))</td><td><a class="table-link" asp-page="Details" asp-route-id="@s.Id">@T["Details"] →</a></td></tr>}</tbody></table></div><nav class="pagination">@for(var p=1;p<=Model.TotalPages;p++){<a class="@(p==Model.PageNumber?"active":"")" asp-route-pageNumber="@p" asp-route-from="@Request.Query["from"]" asp-route-to="@Request.Query["to"]" asp-route-saleListId="@Request.Query["saleListId"]" asp-route-search="@Request.Query["search"]">@p</a>}</nav><div class="list-actions"><a id="exportCsv" class="btn btn-primary" asp-page-handler="Export" asp-route-from="@Request.Query["from"]" asp-route-to="@Request.Query["to"]" asp-route-saleListId="@Request.Query["saleListId"]" asp-route-search="@Request.Query["search"]">⇩ @T["ExportCsv"]</a><button type="button" id="shareCsv" class="btn btn-light">↗ @T["Share"]</button></div></section>
-@section Scripts{<script>document.getElementById('shareCsv')?.addEventListener('click',async()=>{const link=document.getElementById('exportCsv');try{const response=await fetch(link.href),blob=await response.blob(),file=new File([blob],'tabsale.csv',{type:'text/csv'});if(navigator.canShare?.({files:[file]}))await navigator.share({title:'TabSale export',files:[file]});else link.click();}catch{link.click();}});</script>}
+@{ ViewData["Title"] = T["History"]; }
+
+<div class="page-title">
+    <div>
+        <p class="eyebrow">@T["Reports"]</p>
+        <h1>@(Current.Role == TabSale.Web.Models.UserRole.User ? T["MySales"] : T["History"])</h1>
+    </div>
+    <a class="btn btn-light" asp-page="/Sale/Shift">◴ @T["CashShift"]</a>
+</div>
+
+<div class="stat-row">
+    <div class="stat"><small>@T["Result"]</small><strong>@((Model.RevenueCents / 100m).ToString("C"))</strong></div>
+    <div class="stat"><small>@T["Transactions"]</small><strong>@Model.SaleCount</strong></div>
+</div>
+
+<section class="panel">
+    <form method="get" class="toolbar">
+        <input type="date" name="from" value="@Request.Query["from"]" />
+        <input type="date" name="to" value="@Request.Query["to"]" />
+        <select name="saleListId">
+            <option value="">@T["AllSaleLists"]</option>
+            @foreach (var list in Model.Lists)
+            {
+                <option value="@list.Id" selected="@(Request.Query["saleListId"] == list.Id.ToString())">@list.Name</option>
+            }
+        </select>
+        <input name="search" value="@Request.Query["search"]" placeholder="@T["Search"]…" />
+        <button class="btn btn-light">@T["Filter"]</button>
+    </form>
+
+    <div class="table-wrap">
+        <table>
+            <thead><tr><th>@T["Time"]</th><th>@T["SoldItems"]</th><th>@T["ShiftName"]</th><th>@T["Receipt"]</th><th>@T["Users"]</th><th>@T["SaleLists"]</th><th class="right">@T["Total"]</th><th></th></tr></thead>
+            <tbody>
+            @foreach (var sale in Model.Items)
+            {
+                var products = string.Join(", ", sale.Lines.OrderBy(x => x.ProductName).Select(x => $"{x.Quantity}× {x.ProductName}"));
+                <tr>
+                    <td>@sale.SoldDate.ToLocalTime().ToString("G")</td>
+                    <td>@products</td>
+                    <td>@(sale.CashShift?.Name ?? "—")</td>
+                    <td><code>@sale.Token.ToString()[..8]</code><br /><span class="badge">@sale.Kind</span></td>
+                    <td>@sale.User.DisplayName</td>
+                    <td>@sale.SaleList.Name</td>
+                    <td class="right amount @(sale.TotalCents < 0 ? "negative" : "")">@((sale.TotalCents / 100m).ToString("C"))</td>
+                    <td><a class="table-link" asp-page="Details" asp-route-id="@sale.Id">@T["Details"] →</a></td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+
+    @if (Model.TotalPages > 1)
+    {
+        <nav class="pagination">
+        @for (var pageIndex = 1; pageIndex <= Model.TotalPages; pageIndex++)
+        {
+            <a class="@(pageIndex == Model.PageNumber ? "active" : "")" asp-route-pageNumber="@pageIndex" asp-route-from="@Request.Query["from"]" asp-route-to="@Request.Query["to"]" asp-route-saleListId="@Request.Query["saleListId"]" asp-route-search="@Request.Query["search"]">@pageIndex</a>
+        }
+        </nav>
+    }
+
+    <div class="list-actions">
+        <a id="exportCsv" class="btn btn-primary" asp-page-handler="Export" asp-route-from="@Request.Query["from"]" asp-route-to="@Request.Query["to"]" asp-route-saleListId="@Request.Query["saleListId"]" asp-route-search="@Request.Query["search"]">⇩ @T["ExportCsv"]</a>
+        <button type="button" id="shareCsv" class="btn btn-light">↗ @T["Share"]</button>
+    </div>
+</section>
+
+<section class="panel section-gap">
+    <div class="page-title compact-title"><div><p class="eyebrow">@T["CashShift"]</p><h2>@T["Shifts"]</h2></div></div>
+    <div class="table-wrap">
+        <table>
+            <thead><tr><th>@T["ShiftName"]</th><th>@T["Opened"]</th><th>@T["Closed"]</th><th>@T["Users"]</th><th>@T["SaleLists"]</th><th class="right">@T["Transactions"]</th><th class="right">@T["Result"]</th><th class="right">@T["CashDifference"]</th></tr></thead>
+            <tbody>
+            @foreach (var shift in Model.Shifts)
+            {
+                var shiftRevenue = shift.Sales.Sum(x => x.TotalCents);
+                var expectedClosing = shift.OpeningCents + shiftRevenue;
+                var difference = shift.CountedClosingCents - expectedClosing;
+                <tr>
+                    <td><strong>@(shift.Name ?? T["UnnamedShift"])</strong></td>
+                    <td>@shift.OpenedDate.ToLocalTime().ToString("G")</td>
+                    <td>@if (shift.ClosedDate.HasValue) { @shift.ClosedDate.Value.ToLocalTime().ToString("G") } else { <span class="badge">@T["StillOpen"]</span> }</td>
+                    <td>@shift.User.DisplayName</td>
+                    <td>@shift.SaleList.Name</td>
+                    <td class="right">@shift.Sales.Count</td>
+                    <td class="right amount @(shiftRevenue < 0 ? "negative" : "")">@((shiftRevenue / 100m).ToString("C"))</td>
+                    <td class="right amount @(difference < 0 ? "negative" : "")">@(difference.HasValue ? (difference.Value / 100m).ToString("C") : "—")</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</section>
+
+@section Scripts {
+<script>
+document.getElementById('shareCsv')?.addEventListener('click', async () => {
+    const link = document.getElementById('exportCsv');
+    try {
+        const response = await fetch(link.href);
+        const blob = await response.blob();
+        const file = new File([blob], 'tabsale.csv', { type: 'text/csv' });
+        if (navigator.canShare?.({ files: [file] })) await navigator.share({ title: 'TabSale export', files: [file] });
+        else link.click();
+    } catch { link.click(); }
+});
+</script>
+}

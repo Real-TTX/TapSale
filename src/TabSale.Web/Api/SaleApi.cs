@@ -71,7 +71,7 @@ public static class SaleApi
         var cancellationDate = DateTimeOffset.UtcNow;
         var cancellation = new Models.Sale
         {
-            Token = Guid.NewGuid(), DeviceToken = current.SessionToken, UserId = current.Id, SaleListId = original.SaleListId, Kind = SaleKind.Cancellation,
+            Token = Guid.NewGuid(), DeviceToken = current.SessionToken, UserId = current.Id, SaleListId = original.SaleListId, CashShiftId = original.CashShiftId, Kind = SaleKind.Cancellation,
             OriginalSaleId = original.Id, SoldDate = cancellationDate, SoldDateUnixMilliseconds = cancellationDate.ToUnixTimeMilliseconds(), TotalCents = -original.TotalCents, CreateUserId = current.Id, UpdateUserId = current.Id,
             Lines = original.Lines.Select(x => new SaleLine { ProductId = x.ProductId, ProductName = x.ProductName, ProductKind = x.ProductKind, ProductVersion = x.ProductVersion, UnitPriceCents = x.UnitPriceCents, Quantity = x.Quantity, LineTotalCents = -x.LineTotalCents, CreateUserId = current.Id, UpdateUserId = current.Id }).ToList()
         };
@@ -92,6 +92,7 @@ public static class SaleApi
         await antiforgery.ValidateRequestAsync(http);
         var shift = await db.CashShift.SingleOrDefaultAsync(x => x.Token == token && x.UserId == current.Id && x.ClosedDate == null);
         if (shift is null) return Results.NotFound();
+        shift.Name = NormalizeShiftName(request.Name);
         shift.CountedClosingCents = request.CountedCents; shift.ClosedDate = DateTimeOffset.UtcNow; shift.UpdateUserId = current.Id;
         await db.SaveChangesAsync(); return Results.Ok();
     }
@@ -104,5 +105,11 @@ public static class SaleApi
     public sealed record SaleInput(Guid Token, Guid DeviceToken, long SaleListId, DateTimeOffset SoldDate, long? TenderedCents, List<SaleLineInput> Lines);
     public sealed record SaleLineInput(long ProductId, int Version, int Quantity);
     public sealed record ShiftOpenRequest(long SaleListId, long OpeningCents);
-    public sealed record ShiftCloseRequest(long CountedCents);
+    public sealed record ShiftCloseRequest(long CountedCents, string? Name);
+
+    private static string? NormalizeShiftName(string? name)
+    {
+        var value = name?.Trim();
+        return string.IsNullOrEmpty(value) ? null : value[..Math.Min(value.Length, 120)];
+    }
 }

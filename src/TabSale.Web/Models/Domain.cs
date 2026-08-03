@@ -99,6 +99,7 @@ public sealed class ProductPriceVersion : AuditEntity
 public sealed class CashShift : AuditEntity
 {
     public Guid Token { get; set; }
+    [MaxLength(120)] public string? Name { get; set; }
     public long UserId { get; set; }
     public AppUser User { get; set; } = null!;
     public long SaleListId { get; set; }
@@ -107,6 +108,7 @@ public sealed class CashShift : AuditEntity
     public long? CountedClosingCents { get; set; }
     public DateTimeOffset OpenedDate { get; set; }
     public DateTimeOffset? ClosedDate { get; set; }
+    public List<Sale> Sales { get; set; } = [];
 }
 
 public sealed class Sale : AuditEntity
