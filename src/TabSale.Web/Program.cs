@@ -76,6 +76,29 @@ app.Use(async (context, next) =>
     await next();
 });
 
+app.Use(async (context, next) =>
+{
+    var requestPath = context.Request.Path.Value ?? "";
+    var extension = Path.GetExtension(requestPath);
+    var fileName = Path.GetFileNameWithoutExtension(requestPath);
+    var fingerprintSeparator = fileName.LastIndexOf('.');
+    var fingerprint = fingerprintSeparator >= 0 ? fileName[(fingerprintSeparator + 1)..] : "";
+    var hasFingerprint = fingerprint.Length >= 8 && fingerprint.All(char.IsLetterOrDigit);
+    var isCacheableAsset = extension is ".css" or ".js" or ".svg" or ".png" or ".ico" or ".webmanifest";
+    var isVersionedAsset = isCacheableAsset && (hasFingerprint || context.Request.Query.ContainsKey("v"));
+    if (isVersionedAsset)
+    {
+        context.Response.OnStarting(() =>
+        {
+            if (context.Response.StatusCode == StatusCodes.Status200OK)
+                context.Response.Headers.CacheControl = "public,max-age=31536000,immutable";
+            return Task.CompletedTask;
+        });
+    }
+
+    await next();
+});
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
