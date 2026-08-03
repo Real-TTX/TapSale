@@ -14,6 +14,7 @@
 [data-theme="winter"] { --ink:#14283d; --muted:#617487; --paper:#edf4f7; --card:#fff; --line:#cfdee5; --brand:#2d769b; --lime:#ccefff; --danger:#b34350; --shadow:0 14px 40px rgba(20,40,61,.11); }
 [data-theme="market"] { --ink:#3e1c20; --muted:#786461; --paper:#f7f0e5; --card:#fffdf8; --line:#e4d5c2; --brand:#9b3e46; --lime:#f0c35a; --danger:#a52c35; --shadow:0 14px 40px rgba(62,28,32,.11); }
 [data-theme="contrast"] { --ink:#000; --muted:#333; --paper:#fff; --card:#fff; --line:#000; --brand:#0057d9; --lime:#ffe600; --danger:#b00020; --shadow:0 0 0 2px #000; }
+[data-theme="custom"] { --muted:color-mix(in srgb,var(--ink),var(--paper) 48%); --card:color-mix(in srgb,var(--paper),#fff 72%); --line:color-mix(in srgb,var(--ink),var(--paper) 84%); --shadow:0 14px 40px color-mix(in srgb,var(--ink),transparent 90%); }
 
 * { box-sizing: border-box; }
 html { min-height:100%; font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; color:var(--ink); background:var(--paper); }
@@ -307,10 +308,41 @@ td.right, th.right { text-align:right; }
 .receipt-meta small { color:var(--muted); margin-bottom:5px; }
 .compact { max-width:420px; }
 .inline-empty { box-shadow:none; margin-top:10px; }
-.appearance-form { max-width:680px; }
+.appearance-form { max-width:820px; }
+.theme-picker { padding:0!important; border:0!important; }
+.theme-picker legend { padding:0!important; margin-bottom:8px; }
+.theme-choice-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:10px; }
+.theme-choice { position:relative; display:grid; gap:9px; min-width:0; margin:0!important; padding:10px; border:1px solid var(--line); border-radius:13px; background:var(--card); cursor:pointer; }
+.theme-choice input { position:absolute; width:1px!important; height:1px; min-height:0!important; opacity:0; }
+.theme-choice:has(input:checked) { border-color:var(--brand); box-shadow:0 0 0 2px color-mix(in srgb,var(--brand),transparent 72%); }
+.theme-choice strong { overflow:hidden; font-size:12px; text-overflow:ellipsis; white-space:nowrap; }
+.theme-choice-preview { display:grid; grid-template-columns:1.4fr 1fr 1fr; height:42px; overflow:hidden; border-radius:9px; background:var(--theme-paper); }
+.theme-choice-preview i:first-child { background:var(--theme-ink); }
+.theme-choice-preview i:nth-child(2) { margin:8px 2px 8px 6px; border-radius:5px; background:var(--theme-brand); }
+.theme-choice-preview i:last-child { margin:8px 6px 8px 2px; border-radius:5px; background:var(--theme-accent); }
+.theme-choice-classic { --theme-ink:#102a2a; --theme-paper:#f4f6f1; --theme-brand:#167d6d; --theme-accent:#e4f26b; }
+.theme-choice-winter { --theme-ink:#14283d; --theme-paper:#edf4f7; --theme-brand:#2d769b; --theme-accent:#ccefff; }
+.theme-choice-market { --theme-ink:#3e1c20; --theme-paper:#f7f0e5; --theme-brand:#9b3e46; --theme-accent:#f0c35a; }
+.theme-choice-contrast { --theme-ink:#000; --theme-paper:#fff; --theme-brand:#0057d9; --theme-accent:#ffe600; }
+.theme-choice-custom { --theme-ink:var(--ink); --theme-paper:var(--paper); --theme-brand:var(--brand); --theme-accent:var(--lime); }
 .admin-color-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
 .admin-color-grid label { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:0; padding:10px 12px; border:1px solid var(--line); border-radius:10px; }
 .admin-color-grid input[type="color"] { width:54px; min-height:38px; padding:2px; }
+.theme-color-control { display:flex; align-items:center; gap:7px; }
+.theme-color-control input[type="text"] { width:86px; min-height:38px; padding:7px 8px; font-family:ui-monospace,"SFMono-Regular",Consolas,monospace; font-size:13px; text-transform:lowercase; }
+.theme-color-control input[type="text"].invalid { border-color:var(--danger); box-shadow:0 0 0 2px color-mix(in srgb,var(--danger),transparent 78%); }
+.theme-live-preview { display:grid; grid-template-columns:minmax(130px,.7fr) minmax(0,2fr); min-height:220px; overflow:hidden; border:1px solid var(--line); border-radius:16px; background:var(--paper); box-shadow:var(--shadow); }
+.theme-preview-nav { display:flex; flex-direction:column; gap:10px; padding:20px; background:var(--ink); color:#fff; }
+.theme-preview-nav strong { margin-bottom:12px; font-size:20px; }
+.theme-preview-nav span { padding:8px 10px; border-radius:8px; color:color-mix(in srgb,#fff,var(--ink) 28%); }
+.theme-preview-nav span:first-of-type { background:color-mix(in srgb,#fff,transparent 88%); color:#fff; }
+.theme-preview-content { display:flex; flex-direction:column; gap:10px; min-width:0; padding:20px; }
+.theme-preview-content > small { color:var(--brand); font-weight:850; text-transform:uppercase; letter-spacing:.12em; }
+.theme-preview-content > strong { font-size:24px; }
+.theme-preview-card { display:flex; justify-content:space-between; gap:12px; padding:15px; border:1px solid var(--line); border-radius:12px; background:var(--card); }
+.theme-preview-actions { display:flex; gap:9px; margin-top:auto; }
+.theme-preview-actions span { padding:9px 13px; border-radius:9px; background:var(--brand); color:#fff; font-weight:750; }
+.theme-preview-actions span:last-child { background:var(--danger); }
 .icon-picker { margin-top:10px; }
 .icon-options { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:9px; }
 .icon-option { position:relative; display:grid; place-items:center; gap:4px; min-height:82px; margin:0!important; padding:9px 5px; border:1px solid var(--line); border-radius:11px; background:var(--card); cursor:pointer; text-align:center; }
@@ -420,6 +452,9 @@ td.right, th.right { text-align:right; }
   .network-dot { width:10px; height:10px; border-radius:50%; background:#62d4a8; }
   .network-dot.offline { background:#f0aa52; }
   .content { padding:20px 14px 110px; }
+  .theme-choice-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .theme-live-preview { grid-template-columns:110px minmax(0,1fr); min-height:200px; }
+  .theme-preview-nav, .theme-preview-content { padding:14px; }
   .sale-head { align-items:center; }
   .view-switch span { display:none; }
   .list-switch { font-size:23px; max-width:60vw; }
