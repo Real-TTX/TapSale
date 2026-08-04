@@ -67,6 +67,7 @@ public sealed class AppText
         ["IconSnack"] = ("Snack", "Snack"), ["IconIceCream"] = ("Eis", "Ice cream"), ["IconTicket"] = ("Ticket", "Ticket"), ["IconDeposit"] = ("Pfand", "Deposit"),
         ["RestaurantMode"] = ("Kassenlayout", "POS layout"), ["RestaurantModeHelp"] = ("Restaurant-Kassenlayout ein- oder ausschalten", "Enable or disable the restaurant POS layout"),
         ["Order"] = ("Stückliste", "Order"), ["CurrentOrder"] = ("Aktueller Bon", "Current ticket"), ["EmptyOrder"] = ("Noch keine Produkte ausgewählt.", "No products selected yet."),
+        ["ResetCart"] = ("Aktuellen Warenkorb leeren", "Clear current cart"), ["ResetCartShort"] = ("Leeren", "Clear"), ["ResetCartConfirm"] = ("Aktuellen Warenkorb wirklich leeren?", "Clear the current cart?"),
         ["Item"] = ("Artikel", "item"), ["Items"] = ("Artikel", "items")
     };
 

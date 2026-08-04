@@ -256,8 +256,16 @@
     document.getElementById('topTotal').textContent = euro.format(value/100);
     document.getElementById('bottomTotal').textContent = euro.format(value/100);
     payBar.disabled = orderProducts().length === 0;
+    document.querySelectorAll('[data-reset-cart]').forEach(button => button.disabled = itemCount() === 0);
     renderOrderPanel();
   }
+
+  document.querySelectorAll('[data-reset-cart]').forEach(button => button.addEventListener('click', () => {
+    if (itemCount() === 0 || !confirm(app.dataset.resetCartConfirm)) return;
+    cart = {};
+    storeCart();
+    render();
+  }));
 
   document.querySelectorAll('[data-view]').forEach(button => button.onclick = () => {
     localStorage.tabsaleView = button.dataset.view;
