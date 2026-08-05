@@ -742,3 +742,146 @@ body:has(.payment-dialog[open]) { overflow:hidden; }
   .sidebar-collapsed .content:has(.restaurant-layout) { padding-left:12px; }
   .sidebar-collapsed .content:has(.restaurant-layout) .sale-head { padding-left:62px; }
 }
+/* Keep the secondary account controls compact and visually separate from navigation. */
+.sidebar-bottom {
+    display: grid;
+    gap: 4px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, .14);
+}
+
+.sidebar-bottom form {
+    margin: 0;
+}
+
+.sidebar-bottom form:last-child {
+    display: block;
+}
+
+.sidebar-bottom .nav-button {
+    width: 100%;
+    min-height: 34px;
+    padding: 7px 9px;
+    border-radius: 9px;
+    color: #aebfba;
+    font-size: 13px;
+}
+
+.sidebar-bottom .language-switch {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px;
+    padding: 0;
+}
+
+.sidebar-bottom .language-switch button {
+    min-height: 30px;
+    padding: 4px 6px;
+    border-radius: 7px;
+    font-size: 11px;
+}
+
+.sidebar-bottom .user-chip {
+    gap: 8px;
+    min-width: 0;
+    padding: 7px 5px;
+    border-top: 0;
+}
+
+.sidebar-bottom .user-chip .avatar {
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
+    font-size: 12px;
+}
+
+.sidebar-bottom .user-chip > span:last-child {
+    min-width: 0;
+}
+
+.sidebar-bottom .user-chip strong {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 13px;
+}
+
+.sidebar-bottom .user-chip small {
+    margin-top: 1px;
+    font-size: 10px;
+}
+
+/* Scrollbars stay unobtrusive until their scroll area is actively used. */
+.sidebar nav,
+.order-lines,
+.restaurant-layout #productGrid,
+.payment-lines,
+.sale-list-options,
+.category-filter {
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+    scrollbar-gutter: auto;
+}
+
+.sidebar nav:hover,
+.sidebar nav:focus-within,
+.order-lines:hover,
+.order-lines:focus-within,
+.restaurant-layout #productGrid:hover,
+.restaurant-layout #productGrid:focus-within,
+.payment-lines:hover,
+.payment-lines:focus-within,
+.sale-list-options:hover,
+.sale-list-options:focus-within,
+.category-filter:hover,
+.category-filter:focus-within {
+    scrollbar-color: color-mix(in srgb, var(--muted), transparent 35%) transparent;
+}
+
+.sidebar nav::-webkit-scrollbar,
+.order-lines::-webkit-scrollbar,
+.restaurant-layout #productGrid::-webkit-scrollbar,
+.payment-lines::-webkit-scrollbar,
+.sale-list-options::-webkit-scrollbar,
+.category-filter::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.sidebar nav::-webkit-scrollbar-track,
+.order-lines::-webkit-scrollbar-track,
+.restaurant-layout #productGrid::-webkit-scrollbar-track,
+.payment-lines::-webkit-scrollbar-track,
+.sale-list-options::-webkit-scrollbar-track,
+.category-filter::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar nav::-webkit-scrollbar-thumb,
+.order-lines::-webkit-scrollbar-thumb,
+.restaurant-layout #productGrid::-webkit-scrollbar-thumb,
+.payment-lines::-webkit-scrollbar-thumb,
+.sale-list-options::-webkit-scrollbar-thumb,
+.category-filter::-webkit-scrollbar-thumb {
+    border: 2px solid transparent;
+    border-radius: 999px;
+    background: transparent;
+    background-clip: padding-box;
+}
+
+.sidebar nav:hover::-webkit-scrollbar-thumb,
+.sidebar nav:focus-within::-webkit-scrollbar-thumb,
+.order-lines:hover::-webkit-scrollbar-thumb,
+.order-lines:focus-within::-webkit-scrollbar-thumb,
+.restaurant-layout #productGrid:hover::-webkit-scrollbar-thumb,
+.restaurant-layout #productGrid:focus-within::-webkit-scrollbar-thumb,
+.payment-lines:hover::-webkit-scrollbar-thumb,
+.payment-lines:focus-within::-webkit-scrollbar-thumb,
+.sale-list-options:hover::-webkit-scrollbar-thumb,
+.sale-list-options:focus-within::-webkit-scrollbar-thumb,
+.category-filter:hover::-webkit-scrollbar-thumb,
+.category-filter:focus-within::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--muted), transparent 35%);
+    background-clip: padding-box;
+}
