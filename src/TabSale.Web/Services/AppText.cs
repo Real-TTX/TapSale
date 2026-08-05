@@ -68,6 +68,7 @@ public sealed class AppText
         ["RestaurantMode"] = ("Kassenlayout", "POS layout"), ["RestaurantModeHelp"] = ("Restaurant-Kassenlayout ein- oder ausschalten", "Enable or disable the restaurant POS layout"),
         ["Order"] = ("Stückliste", "Order"), ["CurrentOrder"] = ("Aktueller Bon", "Current ticket"), ["EmptyOrder"] = ("Noch keine Produkte ausgewählt.", "No products selected yet."),
         ["ResetCart"] = ("Aktuellen Warenkorb leeren", "Clear current cart"), ["ResetCartShort"] = ("Leeren", "Clear"), ["ResetCartConfirm"] = ("Aktuellen Warenkorb wirklich leeren?", "Clear the current cart?"),
+        ["ShowOrderDetails"] = ("Stückliste anzeigen", "Show order details"), ["CloseOrderDetails"] = ("Stückliste schließen", "Close order details"), ["BackToPayment"] = ("Zurück zum Bezahlen", "Back to payment"),
         ["Item"] = ("Artikel", "item"), ["Items"] = ("Artikel", "items")
     };
 

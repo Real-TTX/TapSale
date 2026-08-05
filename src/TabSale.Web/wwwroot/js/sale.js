@@ -14,6 +14,10 @@
   const restaurantToggle = document.getElementById('restaurantToggle');
   const orderLines = document.getElementById('orderLines');
   const paymentLines = document.getElementById('paymentLines');
+  const paymentOverlayLines = document.getElementById('paymentOverlayLines');
+  const paymentReceipt = document.getElementById('paymentReceipt');
+  const paymentReceiptToggle = document.getElementById('paymentReceiptToggle');
+  const paymentReceiptOverlay = document.getElementById('paymentReceiptOverlay');
   const csrf = document.querySelector('meta[name="csrf-token"]')?.content || '';
   const euro = new Intl.NumberFormat(document.documentElement.lang || 'en', { style:'currency', currency:'EUR' });
   const deviceToken = localStorage.tabsaleDeviceToken ||= crypto.randomUUID();
@@ -178,14 +182,43 @@
   function renderPaymentReceipt() {
     const products = orderProducts();
     paymentLines.innerHTML = '';
-    document.getElementById('paymentItemCount').textContent = itemCountText();
+    paymentOverlayLines.innerHTML = '';
+    const countText = itemCountText();
+    document.getElementById('paymentItemCount').textContent = countText;
+    document.getElementById('paymentReceiptToggleCount').textContent = countText;
     for (const product of products) {
       const quantity = cart[product.id];
       const line = document.createElement('div'); line.className = 'payment-line';
       const name = document.createElement('span'); name.textContent = `${quantity}× ${product.name}`;
       const price = document.createElement('strong'); price.textContent = euro.format(signedPrice(product) * quantity / 100);
-      line.append(name, price); paymentLines.append(line);
+      line.append(name, price);
+      paymentLines.append(line);
+      paymentOverlayLines.append(line.cloneNode(true));
     }
+  }
+
+  function setPaymentReceiptOverlay(open) {
+    paymentReceiptOverlay.hidden = !open;
+    paymentReceiptToggle.setAttribute('aria-expanded', String(open));
+  }
+
+  function updatePaymentReceiptLayout() {
+    if (!dialog.open) return;
+    setPaymentReceiptOverlay(false);
+    dialog.classList.remove('payment-receipt-collapsed');
+    const dialogStyle = getComputedStyle(dialog);
+    const receiptStyle = getComputedStyle(paymentReceipt);
+    const complete = document.getElementById('completeSale');
+    const completeStyle = getComputedStyle(complete);
+    const paymentPanel = document.getElementById('paymentPayout').hidden
+      ? document.getElementById('paymentNormal')
+      : document.getElementById('paymentPayout');
+    const available = dialog.clientHeight - parseFloat(dialogStyle.paddingTop) - parseFloat(dialogStyle.paddingBottom);
+    const required = paymentReceipt.offsetHeight + parseFloat(receiptStyle.marginBottom)
+      + paymentPanel.scrollHeight + complete.offsetHeight
+      + parseFloat(completeStyle.marginTop) + parseFloat(completeStyle.marginBottom);
+    const paymentScrolls = paymentPanel.scrollHeight > paymentPanel.clientHeight + 1;
+    dialog.classList.toggle('payment-receipt-collapsed', paymentScrolls || required > available + 1);
   }
 
   function createProductCard(product) {
@@ -292,7 +325,20 @@
     });
     loadCart(); loadCategory(); render(); listDialog.close();
   }));
-  payBar.onclick = () => { given = 0; inputDigits = ''; updatePayment(); dialog.showModal(); };
+  payBar.onclick = () => {
+    given = 0; inputDigits = ''; updatePayment(); dialog.showModal();
+    requestAnimationFrame(updatePaymentReceiptLayout);
+  };
+  paymentReceiptToggle.onclick = () => setPaymentReceiptOverlay(true);
+  document.getElementById('paymentReceiptClose').onclick = () => setPaymentReceiptOverlay(false);
+  document.getElementById('paymentReceiptBack').onclick = () => setPaymentReceiptOverlay(false);
+  dialog.addEventListener('cancel', event => {
+    if (paymentReceiptOverlay.hidden) return;
+    event.preventDefault();
+    setPaymentReceiptOverlay(false);
+  });
+  dialog.addEventListener('close', () => setPaymentReceiptOverlay(false));
+  addEventListener('resize', () => { if (dialog.open) updatePaymentReceiptLayout(); });
   document.querySelectorAll('[data-cash]').forEach(button => button.onclick = () => {
     given = Math.min(99999999, given + Number(button.dataset.cash));
     inputDigits = String(given);

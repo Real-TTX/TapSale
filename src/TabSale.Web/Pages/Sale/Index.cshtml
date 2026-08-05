@@ -33,7 +33,16 @@
 </dialog>
 <dialog id="paymentDialog" class="payment-dialog">
  <form method="dialog"><button class="dialog-close" value="cancel" aria-label="@T["Close"]">×</button></form>
- <section class="payment-receipt"><div class="payment-receipt-head"><strong>@T["Order"]</strong><span id="paymentItemCount">0 @T["Items"]</span></div><div id="paymentLines" class="payment-lines"></div></section>
+ <section id="paymentReceipt" class="payment-receipt">
+  <div class="payment-receipt-head"><strong>@T["Order"]</strong><span id="paymentItemCount">0 @T["Items"]</span></div>
+  <button type="button" id="paymentReceiptToggle" class="payment-receipt-toggle" aria-expanded="false" aria-controls="paymentReceiptOverlay"><strong id="paymentReceiptToggleCount">0 @T["Items"]</strong><span>@T["ShowOrderDetails"]</span><b aria-hidden="true">↑</b></button>
+  <div id="paymentLines" class="payment-lines"></div>
+ </section>
+ <section id="paymentReceiptOverlay" class="payment-receipt-overlay" hidden aria-labelledby="paymentReceiptOverlayTitle">
+  <header><div><p class="eyebrow">@T["CurrentOrder"]</p><h2 id="paymentReceiptOverlayTitle">@T["Order"]</h2></div><button type="button" id="paymentReceiptClose" class="dialog-close" aria-label="@T["CloseOrderDetails"]">×</button></header>
+  <div id="paymentOverlayLines" class="payment-lines payment-overlay-lines"></div>
+  <button type="button" id="paymentReceiptBack" class="btn btn-secondary payment-receipt-back">← @T["BackToPayment"]</button>
+ </section>
  <div id="paymentNormal"><p class="eyebrow">@T["Cash"]</p><h2 id="dueTotal">€0.00</h2><p class="given-label">@T["Given"]</p><div class="given-display"><span id="givenDisplay">€0.00</span><button type="button" id="clearGiven" class="given-clear" aria-label="@T["ResetGiven"]">×</button></div>
  <div class="quick-cash"><button type="button" data-cash="500">€5</button><button type="button" data-cash="1000">€10</button><button type="button" data-cash="2000">€20</button><button type="button" data-cash="5000">€50</button></div>
  <div class="keypad">@foreach (var key in new[]{"1","2","3","4","5","6","7","8","9","C","0","⌫"}) { <button type="button" data-key="@key">@key</button> }</div>

@@ -593,3 +593,26 @@ td.right, th.right { text-align:right; }
   .restaurant-layout .category-selection { grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); }
   .restaurant-layout .category-card { min-height:104px; }
 }
+
+/* The receipt collapses only when the payment dialog cannot fit without scrolling. */
+.payment-dialog { position:relative; }
+.payment-receipt-toggle { display:none; }
+.payment-receipt-collapsed .payment-receipt { min-height:0; max-height:none; margin-bottom:10px; padding:0; border:0; background:transparent; overflow:visible; }
+.payment-receipt-collapsed .payment-receipt-head,
+.payment-receipt-collapsed .payment-receipt > .payment-lines { display:none; }
+.payment-receipt-collapsed .payment-receipt-toggle { display:flex; align-items:center; width:100%; min-height:54px; padding:10px 12px; border:1px solid var(--line); border-radius:12px; background:var(--paper); color:var(--ink); text-align:left; }
+.payment-receipt-toggle strong { min-width:0; font-size:16px; }
+.payment-receipt-toggle span { margin-left:auto; color:var(--muted); font-size:12px; font-weight:750; }
+.payment-receipt-toggle b { display:grid; place-items:center; flex:0 0 30px; width:30px; height:30px; margin-left:10px; border-radius:50%; background:var(--card); color:var(--brand); font-size:18px; }
+.payment-receipt-overlay { position:absolute; inset:0; z-index:5; display:flex; flex-direction:column; min-height:0; padding:28px; border-radius:inherit; background:var(--card); }
+.payment-receipt-overlay[hidden] { display:none; }
+.payment-receipt-overlay > header { display:flex; align-items:flex-start; justify-content:space-between; gap:18px; padding-bottom:16px; border-bottom:1px solid var(--line); }
+.payment-receipt-overlay > header h2 { margin:0; font-size:32px; }
+.payment-receipt-overlay > header .dialog-close { position:static; flex:0 0 42px; width:42px; height:42px; }
+.payment-overlay-lines { flex:1 1 auto; max-height:none; min-height:0; margin:10px 0; overflow-y:auto; overscroll-behavior:contain; }
+.payment-overlay-lines .payment-line { min-height:44px; font-size:15px; }
+.payment-receipt-back { flex:0 0 auto; width:100%; min-height:50px; }
+
+@media (max-width:760px), (max-height:900px) {
+  .payment-receipt-overlay { padding:max(20px,env(safe-area-inset-top)) 18px max(16px,env(safe-area-inset-bottom)); border-radius:inherit; }
+}
