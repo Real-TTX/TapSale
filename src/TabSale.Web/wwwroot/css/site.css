@@ -1032,3 +1032,110 @@ body:has(.payment-dialog[open]) { overflow:hidden; }
         font-size: 24px;
     }
 }
+
+/* Shared application dialog used instead of browser confirm/alert popups. */
+.app-dialog {
+    width: min(440px, calc(100vw - 28px));
+    max-width: none;
+    padding: 0;
+    border: 0;
+    border-radius: 22px;
+    background: var(--card);
+    color: var(--ink);
+    box-shadow: 0 24px 80px rgba(7, 21, 21, .4);
+}
+
+.app-dialog::backdrop {
+    background: rgba(7, 21, 21, .68);
+    backdrop-filter: blur(4px);
+}
+
+.app-dialog-card {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 16px;
+    padding: 24px;
+}
+
+.app-dialog-symbol {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 15px;
+    background: color-mix(in srgb, var(--danger), var(--card) 88%);
+    color: var(--danger);
+    font-size: 25px;
+    font-weight: 900;
+}
+
+.app-dialog.is-alert .app-dialog-symbol {
+    background: color-mix(in srgb, var(--brand), var(--card) 88%);
+    color: var(--brand);
+}
+
+.app-dialog-copy {
+    min-width: 0;
+}
+
+.app-dialog-copy .eyebrow {
+    margin-bottom: 4px;
+    font-size: 10px;
+}
+
+.app-dialog-copy h2 {
+    margin: 0;
+    font-size: 24px;
+    line-height: 1.15;
+}
+
+.app-dialog-copy > p:last-child {
+    margin: 10px 0 0;
+    color: var(--muted);
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.app-dialog-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 9px;
+    padding-top: 5px;
+}
+
+.app-dialog-actions .btn {
+    min-width: 112px;
+    min-height: 44px;
+}
+
+@media (max-width: 480px) {
+    .app-dialog-card {
+        grid-template-columns: 42px minmax(0, 1fr);
+        gap: 12px;
+        padding: 20px;
+    }
+
+    .app-dialog-symbol {
+        width: 42px;
+        height: 42px;
+        border-radius: 13px;
+    }
+
+    .app-dialog-copy h2 {
+        font-size: 21px;
+    }
+
+    .app-dialog-actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .app-dialog.is-alert .app-dialog-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .app-dialog-actions .btn {
+        min-width: 0;
+    }
+}

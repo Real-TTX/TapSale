@@ -1,4 +1,80 @@
 (() => {
+  const language = document.documentElement.lang === 'de' ? 'de' : 'en';
+  const dialogWords = language === 'de'
+    ? { confirmation:'Bitte bestätigen', confirm:'Bestätigen', cancel:'Abbrechen', okay:'OK', notice:'Hinweis' }
+    : { confirmation:'Please confirm', confirm:'Confirm', cancel:'Cancel', okay:'OK', notice:'Notice' };
+
+  const dialog = document.createElement('dialog');
+  dialog.className = 'app-dialog';
+  dialog.setAttribute('aria-labelledby', 'appDialogTitle');
+  dialog.setAttribute('aria-describedby', 'appDialogMessage');
+  dialog.innerHTML = `<div class="app-dialog-card"><div class="app-dialog-symbol" aria-hidden="true">?</div><div class="app-dialog-copy"><p class="eyebrow"></p><h2 id="appDialogTitle"></h2><p id="appDialogMessage"></p></div><div class="app-dialog-actions"><button type="button" class="btn btn-light app-dialog-cancel"></button><button type="button" class="btn app-dialog-confirm"></button></div></div>`;
+  document.body.append(dialog);
+
+  const dialogTitle = dialog.querySelector('#appDialogTitle');
+  const dialogMessage = dialog.querySelector('#appDialogMessage');
+  const dialogEyebrow = dialog.querySelector('.eyebrow');
+  const dialogSymbol = dialog.querySelector('.app-dialog-symbol');
+  const cancelDialog = dialog.querySelector('.app-dialog-cancel');
+  const confirmDialog = dialog.querySelector('.app-dialog-confirm');
+  let resolveDialog;
+
+  const finishDialog = confirmed => {
+    if (!dialog.open) return;
+    dialog.close(confirmed ? 'confirm' : 'cancel');
+  };
+
+  const showDialog = (message, options = {}) => new Promise(resolve => {
+    const alertMode = options.mode === 'alert';
+    resolveDialog = resolve;
+    dialogEyebrow.textContent = options.eyebrow ?? (alertMode ? dialogWords.notice : dialogWords.confirmation);
+    dialogTitle.textContent = options.title ?? (alertMode ? dialogWords.notice : dialogWords.confirmation);
+    dialogMessage.textContent = message;
+    dialogSymbol.textContent = alertMode ? 'i' : '!';
+    dialog.classList.toggle('is-alert', alertMode);
+    dialog.classList.toggle('is-danger', options.danger !== false && !alertMode);
+    cancelDialog.hidden = alertMode;
+    cancelDialog.textContent = options.cancelText ?? dialogWords.cancel;
+    confirmDialog.textContent = options.confirmText ?? (alertMode ? dialogWords.okay : dialogWords.confirm);
+    confirmDialog.className = `btn app-dialog-confirm ${options.danger !== false && !alertMode ? 'btn-danger' : 'btn-primary'}`;
+    dialog.showModal();
+    confirmDialog.focus();
+  });
+
+  cancelDialog.addEventListener('click', () => finishDialog(false));
+  confirmDialog.addEventListener('click', () => finishDialog(true));
+  dialog.addEventListener('cancel', event => {
+    event.preventDefault();
+    finishDialog(false);
+  });
+  dialog.addEventListener('close', () => {
+    const resolve = resolveDialog;
+    resolveDialog = null;
+    resolve?.(dialog.returnValue === 'confirm');
+  });
+
+  document.addEventListener('tabsale:confirm', event => {
+    showDialog(event.detail.message, event.detail.options).then(event.detail.resolve);
+  });
+  document.addEventListener('tabsale:alert', event => {
+    showDialog(event.detail.message, { ...event.detail.options, mode:'alert', danger:false }).then(event.detail.resolve);
+  });
+
+  document.addEventListener('click', async event => {
+    const trigger = event.target.closest('[data-confirm]');
+    if (!trigger || trigger.dataset.confirmed === 'true') return;
+    event.preventDefault();
+    event.stopPropagation();
+    const confirmed = await showDialog(trigger.dataset.confirm, {
+      title: trigger.dataset.confirmTitle,
+      confirmText: trigger.dataset.confirmAction
+    });
+    if (!confirmed) return;
+    trigger.dataset.confirmed = 'true';
+    trigger.click();
+    delete trigger.dataset.confirmed;
+  }, true);
+
   const sidebar = document.getElementById('sidebar');
   const sidebarBackdrop = document.getElementById('sidebarBackdrop');
   const setMobileMenu = open => {

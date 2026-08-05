@@ -41,6 +41,8 @@ public sealed class AppText
         ["Given"] = ("Gegeben", "Given"), ["ResetGiven"] = ("Gegebenen Betrag zurücksetzen", "Reset amount given"), ["ConfirmPayout"] = ("Bestätige die Barauszahlung an den Kunden.", "Confirm the cash payout to the customer."), ["Close"] = ("Schließen", "Close"),
         ["SetupHelp"] = ("Erstelle den ersten Administrator. Danach ist diese Seite dauerhaft deaktiviert.", "Create the first administrator. This page is permanently disabled afterwards."),
         ["LoginHelp"] = ("Schnell und zuverlässig verkaufen – auch offline.", "Fast, reliable selling — even offline."), ["DeleteConfirm"] = ("Wirklich endgültig löschen?", "Delete permanently?"),
+        ["Confirmation"] = ("Bitte bestätigen", "Please confirm"), ["Confirm"] = ("Bestätigen", "Confirm"), ["Cancel"] = ("Abbrechen", "Cancel"), ["Okay"] = ("OK", "OK"),
+        ["ActionFailed"] = ("Aktion fehlgeschlagen", "Action failed"), ["CancelSaleConfirm"] = ("Diesen Verkauf wirklich nachvollziehbar stornieren?", "Create an auditable cancellation for this sale?"),
         ["CustomTheme"] = ("Eigenes CI", "Custom brand"), ["Colors"] = ("Farben", "Colors"), ["NavigationColor"] = ("Navigation", "Navigation"),
         ["PrimaryColor"] = ("Primär", "Primary"), ["AccentColor"] = ("Akzent", "Accent"), ["BackgroundColor"] = ("Hintergrund", "Background"),
         ["DangerColor"] = ("Warnung", "Danger"), ["ResetColors"] = ("Farben zurücksetzen", "Reset colors"),

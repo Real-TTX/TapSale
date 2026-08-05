@@ -10,5 +10,5 @@
     <label asp-for="Input.Color">@T["Color"]</label><input asp-for="Input.Color" type="color"/>
     <label asp-for="Input.SortOrder">@T["SortOrder"]</label><input asp-for="Input.SortOrder"/>
     <label class="check"><input asp-for="Input.IsActive"/> @T["Active"]</label>
-    <div class="button-row"><button class="btn btn-primary" asp-page-handler="Save">@T["Save"]</button><a class="btn btn-light" asp-page="/Admin/SaleLists/Edit" asp-route-id="@Model.Input.SaleListId" asp-route-tab="categories">@T["Back"]</a>@if(Model.CanDelete){<button class="btn btn-danger delete-space" asp-page-handler="Delete" onclick="return confirm('@T["DeleteConfirm"]')">@T["Delete"]</button>}</div>
+    <div class="button-row"><button class="btn btn-primary" asp-page-handler="Save">@T["Save"]</button><a class="btn btn-light" asp-page="/Admin/SaleLists/Edit" asp-route-id="@Model.Input.SaleListId" asp-route-tab="categories">@T["Back"]</a>@if(Model.CanDelete){<button class="btn btn-danger delete-space" asp-page-handler="Delete" data-confirm="@T["DeleteConfirm"]" data-confirm-title="@T["Confirmation"]" data-confirm-action="@T["Delete"]">@T["Delete"]</button>}</div>
 </form>

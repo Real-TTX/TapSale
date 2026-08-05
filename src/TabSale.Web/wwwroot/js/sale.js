@@ -1,6 +1,9 @@
 (() => {
   const app = document.getElementById('saleApp');
   if (!app) return;
+  const confirmInApp = (message, options = {}) => new Promise(resolve => {
+    document.dispatchEvent(new CustomEvent('tabsale:confirm', { detail:{ message, options, resolve } }));
+  });
 
   const catalog = JSON.parse(document.getElementById('catalogData').textContent || '[]');
   const listDialog = document.getElementById('saleListDialog');
@@ -302,8 +305,8 @@
     renderOrderPanel();
   }
 
-  document.querySelectorAll('[data-reset-cart]').forEach(button => button.addEventListener('click', () => {
-    if (itemCount() === 0 || !confirm(app.dataset.resetCartConfirm)) return;
+  document.querySelectorAll('[data-reset-cart]').forEach(button => button.addEventListener('click', async () => {
+    if (itemCount() === 0 || !await confirmInApp(app.dataset.resetCartConfirm)) return;
     cart = {};
     storeCart();
     render();
