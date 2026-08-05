@@ -717,3 +717,28 @@ body:has(.payment-dialog[open]) { overflow:hidden; }
   .product-grid.tiles .product-add { padding:34px 11px 47px; }
   .product-grid.tiles .product-icon { width:46px; height:46px; font-size:26px; }
 }
+
+/* Sales screens use the entire main column. Only the heading reserves space for the floating burger. */
+.content:has(#saleApp) { width:100%; max-width:none; padding-inline:clamp(14px,2vw,30px); }
+.content:has(#saleApp) .sale-workspace,
+.content:has(#saleApp) .catalog-pane { width:100%; }
+
+@media (min-width:761px) {
+  .sidebar-collapsed .content:has(#saleApp) { padding-left:clamp(14px,2vw,30px); }
+  .sidebar-collapsed .content:has(#saleApp) .sale-head { padding-left:62px; }
+}
+
+@media (min-width:1367px) {
+  #productGrid.product-grid.tiles { grid-template-columns:repeat(auto-fill,minmax(min(240px,100%),1fr)); }
+}
+
+@media (min-width:900px) and (orientation:landscape) {
+  .content:has(.restaurant-layout) { width:100%; max-width:none; }
+  .restaurant-layout .sale-workspace { width:100%; }
+}
+
+@media (min-width:900px) and (orientation:landscape) and (max-height:650px) {
+  .content:has(.restaurant-layout) { padding-inline:12px; }
+  .sidebar-collapsed .content:has(.restaurant-layout) { padding-left:12px; }
+  .sidebar-collapsed .content:has(.restaurant-layout) .sale-head { padding-left:62px; }
+}
