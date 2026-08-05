@@ -18,6 +18,8 @@
   const paymentReceipt = document.getElementById('paymentReceipt');
   const paymentReceiptToggle = document.getElementById('paymentReceiptToggle');
   const paymentReceiptOverlay = document.getElementById('paymentReceiptOverlay');
+  const paymentActions = dialog.querySelector('.payment-actions');
+  const givenInput = document.getElementById('givenInput');
   const csrf = document.querySelector('meta[name="csrf-token"]')?.content || '';
   const euro = new Intl.NumberFormat(document.documentElement.lang || 'en', { style:'currency', currency:'EUR' });
   const deviceToken = localStorage.tabsaleDeviceToken ||= crypto.randomUUID();
@@ -205,20 +207,27 @@
   function updatePaymentReceiptLayout() {
     if (!dialog.open) return;
     setPaymentReceiptOverlay(false);
-    dialog.classList.remove('payment-receipt-collapsed');
-    const dialogStyle = getComputedStyle(dialog);
-    const receiptStyle = getComputedStyle(paymentReceipt);
-    const complete = document.getElementById('completeSale');
-    const completeStyle = getComputedStyle(complete);
+    dialog.classList.remove('payment-receipt-collapsed', 'payment-compact', 'payment-dense', 'payment-system-input', 'payment-ultra');
+    givenInput.readOnly = true;
     const paymentPanel = document.getElementById('paymentPayout').hidden
       ? document.getElementById('paymentNormal')
       : document.getElementById('paymentPayout');
-    const available = dialog.clientHeight - parseFloat(dialogStyle.paddingTop) - parseFloat(dialogStyle.paddingBottom);
-    const required = paymentReceipt.offsetHeight + parseFloat(receiptStyle.marginBottom)
-      + paymentPanel.scrollHeight + complete.offsetHeight
-      + parseFloat(completeStyle.marginTop) + parseFloat(completeStyle.marginBottom);
-    const paymentScrolls = paymentPanel.scrollHeight > paymentPanel.clientHeight + 1;
-    dialog.classList.toggle('payment-receipt-collapsed', paymentScrolls || required > available + 1);
+    const fits = () => {
+      const dialogStyle = getComputedStyle(dialog);
+      const receiptStyle = getComputedStyle(paymentReceipt);
+      const actionsStyle = getComputedStyle(paymentActions);
+      const available = dialog.clientHeight - parseFloat(dialogStyle.paddingTop) - parseFloat(dialogStyle.paddingBottom);
+      const required = paymentReceipt.offsetHeight + parseFloat(receiptStyle.marginBottom)
+        + paymentPanel.scrollHeight + paymentActions.offsetHeight
+        + parseFloat(actionsStyle.marginTop) + parseFloat(actionsStyle.marginBottom);
+      return required <= available + 1;
+    };
+    if (!fits()) dialog.classList.add('payment-receipt-collapsed');
+    if (!fits()) dialog.classList.add('payment-compact');
+    if (!fits()) dialog.classList.add('payment-dense');
+    if (!fits() && paymentPanel.id === 'paymentNormal') dialog.classList.add('payment-system-input');
+    if (!fits() && paymentPanel.id === 'paymentNormal') dialog.classList.add('payment-ultra');
+    givenInput.readOnly = !dialog.classList.contains('payment-system-input');
   }
 
   function createProductCard(product) {
@@ -345,6 +354,22 @@
     updatePayment();
   });
   document.getElementById('clearGiven').onclick = () => { given = 0; inputDigits = ''; updatePayment(); };
+  const parseDeviceAmount = value => {
+    const raw = value.replace(/[^0-9,.]/g, '');
+    const separator = Math.max(raw.lastIndexOf(','), raw.lastIndexOf('.'));
+    if (separator < 0) return Math.min(99999999, Number(raw.replace(/\D/g, '') || 0) * 100);
+    const euros = Number(raw.slice(0, separator).replace(/\D/g, '') || 0);
+    const cents = Number(raw.slice(separator + 1).replace(/\D/g, '').padEnd(2, '0').slice(0, 2) || 0);
+    return Math.min(99999999, euros * 100 + cents);
+  };
+  givenInput.addEventListener('input', () => {
+    if (givenInput.readOnly) return;
+    given = parseDeviceAmount(givenInput.value);
+    inputDigits = String(given);
+    updatePayment(true);
+  });
+  givenInput.addEventListener('focus', () => { if (!givenInput.readOnly) givenInput.select(); });
+  givenInput.addEventListener('blur', () => { givenInput.value = euro.format(given / 100); });
   document.querySelectorAll('[data-key]').forEach(button => button.onclick = () => {
     const key = button.dataset.key;
     if (key === 'C') inputDigits = '';
@@ -354,14 +379,15 @@
     updatePayment();
   });
 
-  function updatePayment() {
+  function updatePayment(preserveGivenInput = false) {
     const due = total(), payout = due < 0;
     renderPaymentReceipt();
     document.getElementById('paymentNormal').hidden = payout;
     document.getElementById('paymentPayout').hidden = !payout;
+    document.getElementById('paymentChange').hidden = payout;
     document.getElementById('dueTotal').textContent = euro.format(due/100);
     document.getElementById('payoutTotal').textContent = euro.format(Math.abs(due)/100);
-    document.getElementById('givenDisplay').textContent = euro.format(given/100);
+    if (!preserveGivenInput) givenInput.value = euro.format(given/100);
     document.getElementById('changeTotal').textContent = euro.format(Math.max(0, given-due)/100);
     document.getElementById('completeSale').disabled = due > 0 && given < due;
   }

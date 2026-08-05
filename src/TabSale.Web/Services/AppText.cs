@@ -69,6 +69,7 @@ public sealed class AppText
         ["Order"] = ("Stückliste", "Order"), ["CurrentOrder"] = ("Aktueller Bon", "Current ticket"), ["EmptyOrder"] = ("Noch keine Produkte ausgewählt.", "No products selected yet."),
         ["ResetCart"] = ("Aktuellen Warenkorb leeren", "Clear current cart"), ["ResetCartShort"] = ("Leeren", "Clear"), ["ResetCartConfirm"] = ("Aktuellen Warenkorb wirklich leeren?", "Clear the current cart?"),
         ["ShowOrderDetails"] = ("Stückliste anzeigen", "Show order details"), ["CloseOrderDetails"] = ("Stückliste schließen", "Close order details"), ["BackToPayment"] = ("Zurück zum Bezahlen", "Back to payment"),
+        ["TapToEnterAmount"] = ("Antippen für Systemtastatur", "Tap to use device keyboard"),
         ["Item"] = ("Artikel", "item"), ["Items"] = ("Artikel", "items")
     };
 
