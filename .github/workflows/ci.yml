@@ -1,0 +1,76 @@
+name: TapSale CI
+
+on:
+  push:
+    branches:
+      - dev
+      - main
+    tags:
+      - "*"
+  pull_request:
+    branches:
+      - dev
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    env:
+      DOTNET_NOLOGO: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Calculate version
+        id: version
+        shell: bash
+        run: |
+          build_date="$(date -u +%Y%m%d)"
+          if [[ "$GITHUB_REF_TYPE" == "tag" ]]; then
+            version="$GITHUB_REF_NAME"
+          elif [[ "$GITHUB_REF_NAME" == "main" ]]; then
+            version="1.0.${GITHUB_RUN_NUMBER}-${build_date}"
+          else
+            version="nightly-${GITHUB_RUN_NUMBER}-${build_date}"
+          fi
+          echo "value=$version" >> "$GITHUB_OUTPUT"
+          echo "TapSale version: $version"
+
+      - name: Restore dependencies
+        run: dotnet restore TapSale.slnx
+
+      - name: Run tests
+        run: >-
+          dotnet test TapSale.slnx
+          --configuration Release
+          --no-restore
+          --logger "trx;LogFileName=tapsale-tests.trx"
+          --results-directory TestResults
+          /p:AssemblyInformationalVersion=${{ steps.version.outputs.value }}
+
+      - name: Build release container
+        run: >-
+          docker build
+          --build-arg BUILD_CONFIGURATION=Release
+          --build-arg VERSION=${{ steps.version.outputs.value }}
+          --tag tapsale:${{ steps.version.outputs.value }}
+          .
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ github.run_number }}
+          path: TestResults
+          if-no-files-found: ignore
+          retention-days: 14
