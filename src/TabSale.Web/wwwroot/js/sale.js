@@ -373,13 +373,26 @@
   });
   givenInput.addEventListener('focus', () => { if (!givenInput.readOnly) givenInput.select(); });
   givenInput.addEventListener('blur', () => { givenInput.value = euro.format(given / 100); });
-  document.querySelectorAll('[data-key]').forEach(button => button.onclick = () => {
-    const key = button.dataset.key;
+  const applyKey = key => {
     if (key === 'C') inputDigits = '';
     else if (key === '⌫') inputDigits = inputDigits.slice(0, -1);
-    else if (inputDigits.length < 8) inputDigits += key;
+    else if (/^[0-9]$/.test(key) && inputDigits.length < 8) inputDigits += key;
     given = Number(inputDigits || 0);
     updatePayment();
+  };
+  document.querySelectorAll('[data-key]').forEach(button => button.onclick = () => applyKey(button.dataset.key));
+  // Physical keyboard support inside the payment dialog (digits, backspace, clear, enter).
+  dialog.addEventListener('keydown', event => {
+    if (!dialog.open) return;
+    if (!givenInput.readOnly && event.target === givenInput) return;
+    const key = event.key;
+    if (key >= '0' && key <= '9') { applyKey(key); event.preventDefault(); }
+    else if (key === 'Backspace') { applyKey('⌫'); event.preventDefault(); }
+    else if (key === 'Delete' || key === 'c' || key === 'C') { applyKey('C'); event.preventDefault(); }
+    else if (key === 'Enter') {
+      const complete = document.getElementById('completeSale');
+      if (!complete.disabled) { event.preventDefault(); complete.click(); }
+    }
   });
 
   function updatePayment(preserveGivenInput = false) {

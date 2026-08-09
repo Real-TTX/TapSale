@@ -97,10 +97,10 @@ button { cursor:pointer; }
 .category-back span, .category-back small, .category-back strong { display:block; }
 .category-back small { color:var(--muted); font-size:11px; }
 .category-back strong { margin-top:1px; font-size:14px; }
-.category-selection { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:14px; }
-.category-card { display:grid; grid-template-columns:52px minmax(0,1fr) 32px; align-items:center; gap:12px; min-height:112px; padding:16px; border:1px solid color-mix(in srgb,var(--category-color),var(--line) 58%); border-radius:18px; background:var(--card); text-align:left; box-shadow:0 4px 16px rgba(16,42,42,.04); }
+.category-selection { display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:16px; }
+.category-card { display:grid; grid-template-columns:60px minmax(0,1fr) 32px; align-items:center; gap:14px; min-height:134px; padding:18px; border:1px solid color-mix(in srgb,var(--category-color),var(--line) 58%); border-radius:18px; background:var(--card); text-align:left; box-shadow:0 4px 16px rgba(16,42,42,.04); }
 .category-card:hover, .category-card:focus-visible { border-color:var(--category-color); background:color-mix(in srgb,var(--category-color),var(--card) 92%); }
-.category-card-icon { display:grid; place-items:center; width:52px; height:52px; border-radius:14px; background:color-mix(in srgb,var(--category-color),var(--card) 86%); font-size:28px; }
+.category-card-icon { display:grid; place-items:center; width:60px; height:60px; border-radius:15px; background:color-mix(in srgb,var(--category-color),var(--card) 86%); font-size:32px; }
 .category-card-copy { min-width:0; }
 .category-card-copy strong, .category-card-copy small { display:block; }
 .category-card-copy strong { overflow:hidden; text-overflow:ellipsis; font-size:17px; white-space:nowrap; }
@@ -200,6 +200,21 @@ button { cursor:pointer; }
 .change-box { display:flex; justify-content:space-between; align-items:center; background:var(--ink); color:#fff; border-radius:15px; padding:15px 18px; }
 .change-box strong { font-size:28px; color:var(--lime); }
 
+/* Short landscape screens: compact the payment "Rechner" so it fits without awkward scrolling. */
+@media (min-width:761px) and (max-height:880px) {
+  .payment-dialog { padding:22px; }
+  .payment-dialog h2 { font-size:34px; margin:2px 0 12px; }
+  .payment-receipt { min-height:0; max-height:118px; margin-bottom:10px; padding:11px; }
+  .payment-lines { max-height:76px; }
+  .given-display { font-size:26px; padding:7px 11px; }
+  .quick-cash, .keypad { gap:8px; margin:10px 0; }
+  .quick-cash button, .keypad button { padding:11px 4px; font-size:17px; }
+  .keypad button { font-size:21px; }
+  .change-box { padding:11px 15px; }
+  .change-box strong { font-size:23px; }
+  .btn-complete { min-height:48px; margin-top:10px; font-size:17px; }
+}
+
 .sale-list-dialog { width:min(560px,calc(100vw - 32px)); max-height:min(720px,calc(100dvh - 40px)); border:0; border-radius:26px; padding:28px; background:var(--card); color:var(--ink); box-shadow:0 25px 90px #07151566; overflow:hidden; }
 .sale-list-dialog[open] { display:flex; flex-direction:column; }
 .sale-list-dialog::backdrop { background:#071515aa; backdrop-filter:blur(4px); }
@@ -237,7 +252,6 @@ button { cursor:pointer; }
 }
 
 @media (min-width:900px) and (max-width:1099px) and (orientation:landscape) {
-  .view-switch span, .restaurant-toggle span { display:none; }
   .restaurant-layout .sale-workspace { grid-template-columns:minmax(0,1fr) 290px; gap:14px; }
   .restaurant-layout .order-panel { padding:14px; }
 }
@@ -252,10 +266,10 @@ button { cursor:pointer; }
   .category-filter { gap:7px; margin:0 0 10px; padding:3px 2px 6px; }
   .category-chip { min-height:40px; padding:5px 11px 5px 7px; }
   .category-chip span { width:26px; height:26px; font-size:18px; }
-  .product-grid.tiles { grid-template-columns:repeat(auto-fill,minmax(170px,1fr)); gap:10px; }
-  .product-grid.tiles .product-card, .product-grid.tiles .product-add { min-height:128px; }
-  .product-grid.tiles .product-add { gap:8px; padding:40px 12px 58px; }
-  .product-grid.tiles .product-icon { width:48px; height:48px; border-radius:12px; font-size:27px; }
+  .product-grid.tiles { grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:12px; }
+  .product-grid.tiles .product-card, .product-grid.tiles .product-add { min-height:150px; }
+  .product-grid.tiles .product-add { gap:10px; padding:48px 14px 64px; }
+  .product-grid.tiles .product-icon { width:56px; height:56px; border-radius:13px; font-size:31px; }
   .product-grid.tiles .product-copy strong { font-size:16px; }
   .product-grid.tiles .product-copy small { margin-top:3px; font-size:14px; }
   .product-grid.tiles .product-count { top:10px; right:12px; min-width:36px; height:27px; font-size:15px; }
@@ -434,10 +448,10 @@ td.right, th.right { text-align:right; }
   .category-chip { min-height:34px; padding:3px 9px 3px 5px; }
   .category-chip span { width:23px; height:23px; font-size:16px; }
   .category-chip strong { font-size:12px; }
-  .product-grid.tiles { grid-template-columns:repeat(auto-fill,minmax(135px,1fr)); gap:7px; }
-  .product-grid.tiles .product-card, .product-grid.tiles .product-add { min-height:108px; border-radius:14px; }
-  .product-grid.tiles .product-add { display:grid; grid-template-columns:38px minmax(0,1fr); align-items:center; gap:9px; padding:25px 9px 41px; }
-  .product-grid.tiles .product-icon { width:38px; height:38px; border-radius:10px; font-size:22px; }
+  .product-grid.tiles { grid-template-columns:repeat(auto-fill,minmax(178px,1fr)); gap:10px; }
+  .product-grid.tiles .product-card, .product-grid.tiles .product-add { min-height:136px; border-radius:16px; }
+  .product-grid.tiles .product-add { display:grid; grid-template-columns:48px minmax(0,1fr); align-items:center; gap:11px; padding:32px 11px 46px; }
+  .product-grid.tiles .product-icon { width:48px; height:48px; border-radius:12px; font-size:27px; }
   .product-grid.tiles .product-copy { min-width:0; }
   .product-grid.tiles .product-copy strong { overflow:hidden; text-overflow:ellipsis; font-size:14px; white-space:nowrap; }
   .product-grid.tiles .product-copy small { margin-top:2px; font-size:12px; }
@@ -467,7 +481,6 @@ td.right, th.right { text-align:right; }
   .theme-live-preview { grid-template-columns:110px minmax(0,1fr); min-height:200px; }
   .theme-preview-nav, .theme-preview-content { padding:14px; }
   .sale-head { align-items:center; }
-  .view-switch span { display:none; }
   .list-switch { font-size:23px; max-width:60vw; }
   .total-display { padding:17px 19px; border-radius:18px; }
   .total-display strong { font-size:42px; }
