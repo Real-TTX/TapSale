@@ -1,4 +1,4 @@
-# TabSale – Aufgabenliste
+# TapSale – Aufgabenliste
 
 Stand: 02.08.2026
 
@@ -8,7 +8,7 @@ Stand: 02.08.2026
 - [x] Razor-Ausführungsmodell festgelegt: klassische Razor Pages; die offlinefähige Verkaufsoberfläche wird clientseitig mit JavaScript, Service Worker und IndexedDB ergänzt.
 - [ ] Offline-Datenfluss festlegen: Verkäufe zuerst lokal im Browser speichern und bei erreichbarem Server synchronisieren.
 - [x] Mehrgerätebetrieb festgelegt: Dieselbe Verkaufsliste darf gleichzeitig auf mehreren Smartphones genutzt werden; Offline-Verkäufe werden später ohne Überschreiben zusammengeführt.
-- [x] Anmeldeverhalten festgelegt: Die erstmalige Anmeldung benötigt den erreichbaren TabSale-Server; danach darf der Benutzer auf dem bereits autorisierten Gerät offline weiterarbeiten.
+- [x] Anmeldeverhalten festgelegt: Die erstmalige Anmeldung benötigt den erreichbaren TapSale-Server; danach darf der Benutzer auf dem bereits autorisierten Gerät offline weiterarbeiten.
 - [x] Position der Gesamtsumme festgelegt: oben dauerhaft als großes Taschenrechner-Display und zusätzlich im unten fixierten, einhändig erreichbaren Bezahl-Balken.
 - [ ] Rollen und Berechtigungen finalisieren: `Admin`, `Verwalter`, `User`.
 - [x] Preisumfang festgelegt: zunächst nur ein Endpreis; Datenmodell und Export für spätere Mehrwertsteuer-, Netto- und Steuerangaben erweiterbar halten.
@@ -201,7 +201,7 @@ Stand: 02.08.2026
 - [ ] Mobile Tests auf kleinen und großen Viewports durchführen.
 - [ ] Barrierefreiheit, Kontrast und Touch-Zielgrößen prüfen.
 - [ ] Sicherheitsprüfung für Anmeldung, Rollen, Tokens, Eingaben und Exporte durchführen.
-- [ ] Sicherung und Wiederherstellung des vollständigen Docker-Volumes dokumentieren und testen; keine automatische Backup-Funktion in TabSale einbauen.
+- [ ] Sicherung und Wiederherstellung des vollständigen Docker-Volumes dokumentieren und testen; keine automatische Backup-Funktion in TapSale einbauen.
 
 ## 13. Release und Betrieb
 

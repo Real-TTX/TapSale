@@ -1,20 +1,21 @@
 services:
-  tabsale:
-    container_name: tabsale-dev
+  tapsale:
+    container_name: tapsale-dev
     build:
       context: .
       dockerfile: Dockerfile
       args:
         BUILD_CONFIGURATION: Debug
-        VERSION: ${TABSALE_VERSION:-local-20260802}
+        VERSION: ${TAPSALE_VERSION:-local-20260802}
     ports:
       - "9262:8080"
     environment:
       ASPNETCORE_ENVIRONMENT: Development
     volumes:
-      - tabsale-dev-data:/app/data
+      - tapsale-dev-data:/app/data
     restart: unless-stopped
 
 volumes:
-  tabsale-dev-data:
+  tapsale-dev-data:
+    # Keep the physical volume name so existing SQLite data and session keys remain available.
     name: tabsale-dev-data

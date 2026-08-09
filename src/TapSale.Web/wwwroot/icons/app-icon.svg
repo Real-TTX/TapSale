@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">TapSale Logo</title>
+  <desc id="desc">Eine stilisierte Registrierkasse mit einem T auf dem Kassenbon.</desc>
+  <rect width="512" height="512" rx="112" fill="#102A2A"/>
+  <circle cx="422" cy="92" r="58" fill="#167D6D" opacity=".24"/>
+  <circle cx="82" cy="422" r="72" fill="#E4F26B" opacity=".09"/>
+  <path d="M196 64h120c11 0 20 9 20 20v142H176V84c0-11 9-20 20-20Z" fill="#F8FAF5"/>
+  <path d="M211 105h90v20h-35v64h-20v-64h-35Z" fill="#167D6D"/>
+  <path d="M176 200h160v32l-16-12-16 12-16-12-16 12-16-12-16 12-16-12-16 12-16-12-10 8Z" fill="#F8FAF5"/>
+  <path d="M134 205h244c13 0 24 9 28 21l35 117H71l35-117c4-12 15-21 28-21Z" fill="#E4F26B"/>
+  <rect x="137" y="237" width="142" height="70" rx="16" fill="#102A2A"/>
+  <rect x="158" y="258" width="100" height="14" rx="7" fill="#8DD3C7"/>
+  <rect x="158" y="282" width="64" height="10" rx="5" fill="#167D6D"/>
+  <g fill="#102A2A">
+    <rect x="288" y="239" width="26" height="27" rx="8"/><rect x="328" y="239" width="26" height="27" rx="8"/><rect x="368" y="239" width="26" height="27" rx="8"/>
+    <rect x="288" y="279" width="26" height="27" rx="8"/><rect x="328" y="279" width="26" height="27" rx="8"/><rect x="368" y="279" width="26" height="27" rx="8"/>
+  </g>
+  <rect x="64" y="326" width="384" height="126" rx="30" fill="#E4F26B"/>
+  <rect x="96" y="352" width="320" height="72" rx="19" fill="#F8FAF5"/>
+  <rect x="202" y="372" width="108" height="17" rx="8.5" fill="#102A2A"/>
+  <circle cx="374" cy="388" r="12" fill="#167D6D"/>
+</svg>

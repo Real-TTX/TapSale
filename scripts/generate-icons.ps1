@@ -1,4 +1,4 @@
-param([string]$WebRoot = (Join-Path $PSScriptRoot '../src/TabSale.Web/wwwroot'))
+param([string]$WebRoot = (Join-Path $PSScriptRoot '../src/TapSale.Web/wwwroot'))
 
 Add-Type -AssemblyName System.Drawing
 Add-Type @'
@@ -27,7 +27,7 @@ function Fill-RoundedRect($graphics, $brush, [float]$x, [float]$y, [float]$width
     $path.Dispose()
 }
 
-function New-TabSaleBitmap([int]$size) {
+function New-TapSaleBitmap([int]$size) {
     $bitmap = [System.Drawing.Bitmap]::new($size, $size, [System.Drawing.Imaging.PixelFormat]::Format32bppArgb)
     $graphics = [System.Drawing.Graphics]::FromImage($bitmap)
     $graphics.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::AntiAlias
@@ -74,15 +74,15 @@ function New-TabSaleBitmap([int]$size) {
 }
 
 $iconDirectory = Join-Path $WebRoot 'icons'
-$bitmap192 = New-TabSaleBitmap 192
+$bitmap192 = New-TapSaleBitmap 192
 $bitmap192.Save((Join-Path $iconDirectory 'app-icon-192.png'), [System.Drawing.Imaging.ImageFormat]::Png)
 $bitmap192.Dispose()
 
-$bitmap512 = New-TabSaleBitmap 512
+$bitmap512 = New-TapSaleBitmap 512
 $bitmap512.Save((Join-Path $iconDirectory 'app-icon-512.png'), [System.Drawing.Imaging.ImageFormat]::Png)
 $bitmap512.Dispose()
 
-$bitmap48 = New-TabSaleBitmap 48
+$bitmap48 = New-TapSaleBitmap 48
 $handle = $bitmap48.GetHicon()
 $icon = [System.Drawing.Icon]::FromHandle($handle)
 $stream = [System.IO.File]::Create((Join-Path $WebRoot 'favicon.ico'))
